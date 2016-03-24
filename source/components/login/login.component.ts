@@ -1,15 +1,17 @@
 import {Component} from 'angular2/core';
+import {FORM_DIRECTIVES} from 'angular2/common';
 import { AuthenticationService, ICredentials } from '../../services/authentication/authentication.service';
 
 @Component({
     templateUrl: 'source/components/login/login.component.html',
+	directives: [FORM_DIRECTIVES],
 })
 export class LoginComponent {
-	model: ICredentials;
+	model: ICredentials = <any>{};
 	
 	constructor(private authenticationService: AuthenticationService) {}
 	
 	onSubmit(): void {
-		console.log('Submitted');
+		this.authenticationService.login(this.model);
 	}
 }
