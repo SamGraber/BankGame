@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', './login.component'], function(exports_1) {
+System.register(['angular2/core', 'angular2/router', './components/login/login.component', './services/authentication/authentication.service'], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,7 +8,7 @@ System.register(['angular2/core', 'angular2/router', './login.component'], funct
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, login_component_1;
+    var core_1, router_1, login_component_1, authentication_service_1;
     var AppComponent;
     return {
         setters:[
@@ -20,6 +20,9 @@ System.register(['angular2/core', 'angular2/router', './login.component'], funct
             },
             function (login_component_1_1) {
                 login_component_1 = login_component_1_1;
+            },
+            function (authentication_service_1_1) {
+                authentication_service_1 = authentication_service_1_1;
             }],
         execute: function() {
             AppComponent = (function () {
@@ -30,6 +33,7 @@ System.register(['angular2/core', 'angular2/router', './login.component'], funct
                         selector: 'my-app',
                         template: "\n\t\t<h1>Bank Game</h1>\n\t\t<nav>\n\t\t\t<a [routerLink]=\"['Login']\">Login</a>\n\t\t</nav>\n\t\t<router-outlet></router-outlet>\n\t",
                         directives: [router_1.ROUTER_DIRECTIVES],
+                        providers: [authentication_service_1.AuthenticationService],
                     }),
                     router_1.RouteConfig([
                         { path: '/login', name: 'Login', component: login_component_1.LoginComponent },

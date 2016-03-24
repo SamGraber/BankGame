@@ -9,26 +9,29 @@ System.register(['angular2/core'], function(exports_1) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1;
-    var LoginComponent;
+    var AuthenticationService;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             }],
         execute: function() {
-            LoginComponent = (function () {
-                function LoginComponent() {
+            AuthenticationService = (function () {
+                function AuthenticationService() {
+                    this.isAuthenticated = false;
                 }
-                LoginComponent = __decorate([
-                    core_1.Component({
-                        template: '<h2>Login</h2>'
-                    }), 
+                AuthenticationService.prototype.login = function (credentials) {
+                    console.log(credentials.username + ' is now logged in');
+                    this.isAuthenticated = true;
+                };
+                AuthenticationService = __decorate([
+                    core_1.Injectable(), 
                     __metadata('design:paramtypes', [])
-                ], LoginComponent);
-                return LoginComponent;
+                ], AuthenticationService);
+                return AuthenticationService;
             })();
-            exports_1("LoginComponent", LoginComponent);
+            exports_1("AuthenticationService", AuthenticationService);
         }
     }
 });
-//# sourceMappingURL=login.component.js.map
+//# sourceMappingURL=authentication.service.js.map
