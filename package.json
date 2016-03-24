@@ -2,10 +2,11 @@
   "name": "bank-game",
   "version": "1.0.0",
   "scripts": {
-    "start": "concurrently \"npm run tsc:w\" \"npm run lite\" ",
+    "start": "concurrently \"npm run tsc:w\" \"npm run http\" ",
     "tsc": "tsc",
     "tsc:w": "tsc -w",
     "lite": "lite-server",
+	"http": "http-server",
     "typings": "typings",
     "postinstall": "jspm install && typings install"
   },
