@@ -2,9 +2,10 @@
   "name": "bank-game",
   "version": "1.0.0",
   "scripts": {
-    "start": "concurrently \"npm run tsc:w\" \"npm run server\" ",
+    "start": "concurrently \"npm run database\" \"npm run tsc:w\" \"npm run server\" ",
     "tsc": "tsc",
     "tsc:w": "tsc -w",
+	"database": "mongod --dbpath ./data",
     "lite": "lite-server",
     "http": "http-server",
     "server": "node ./server/run.js",
