@@ -9,6 +9,7 @@ import {AuthenticationService} from './services/authentication/authentication.se
     template: `
 		<h1>Bank Game</h1>
 		<ul class="nav nav-tabs">
+			<li role="presentation" *ngIf="authentication.isAuthenticated"><a [routerLink]="['Main']">Main</a></li>
 			<li role="presentation"><a [routerLink]="['Login']">Login</a></li>
 		</ul>
 		<router-outlet></router-outlet>
@@ -22,4 +23,6 @@ import {AuthenticationService} from './services/authentication/authentication.se
 //   {path:'/bank',  name: 'Bank',    component: HeroDetailComponent}
   {path:'/main',  name: 'Main',    component: MainComponent}
 ])
-export class AppComponent { }
+export class AppComponent { 
+	constructor(public authentication: AuthenticationService) {}
+}
