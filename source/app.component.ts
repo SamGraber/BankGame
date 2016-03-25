@@ -1,6 +1,7 @@
 import {Component} from 'angular2/core';
 import {RouteConfig, Router, ROUTER_DIRECTIVES} from 'angular2/router';
 import {LoginComponent} from './components/login/login.component';
+import {MainComponent} from './components/main/main.component';
 import {AuthenticationService} from './services/authentication/authentication.service';
 
 @Component({
@@ -19,5 +20,6 @@ import {AuthenticationService} from './services/authentication/authentication.se
   {path:'/login', name: 'Login',   component: LoginComponent},
 //   {path:'/user',  name: 'Profile', component: HeroListComponent},
 //   {path:'/bank',  name: 'Bank',    component: HeroDetailComponent}
+  {path:'/main',  name: 'Main',    component: MainComponent}
 ])
 export class AppComponent { }
