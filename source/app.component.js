@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', './components/login/login.component', './services/authentication/authentication.service'], function(exports_1) {
+System.register(['angular2/core', 'angular2/router', './components/login/login.component', './components/main/main.component', './services/authentication/authentication.service'], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,7 +8,7 @@ System.register(['angular2/core', 'angular2/router', './components/login/login.c
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, login_component_1, authentication_service_1;
+    var core_1, router_1, login_component_1, main_component_1, authentication_service_1;
     var AppComponent;
     return {
         setters:[
@@ -20,6 +20,9 @@ System.register(['angular2/core', 'angular2/router', './components/login/login.c
             },
             function (login_component_1_1) {
                 login_component_1 = login_component_1_1;
+            },
+            function (main_component_1_1) {
+                main_component_1 = main_component_1_1;
             },
             function (authentication_service_1_1) {
                 authentication_service_1 = authentication_service_1_1;
@@ -37,6 +40,9 @@ System.register(['angular2/core', 'angular2/router', './components/login/login.c
                     }),
                     router_1.RouteConfig([
                         { path: '/login', name: 'Login', component: login_component_1.LoginComponent },
+                        //   {path:'/user',  name: 'Profile', component: HeroListComponent},
+                        //   {path:'/bank',  name: 'Bank',    component: HeroDetailComponent}
+                        { path: '/main', name: 'Main', component: main_component_1.MainComponent }
                     ]), 
                     __metadata('design:paramtypes', [])
                 ], AppComponent);

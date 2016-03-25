@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/common', '../../services/authentication/authentication.service'], function(exports_1) {
+System.register(['angular2/core', 'angular2/common', 'angular2/router', '../../services/authentication/authentication.service'], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,7 +8,7 @@ System.register(['angular2/core', 'angular2/common', '../../services/authenticat
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, common_1, authentication_service_1;
+    var core_1, common_1, router_1, authentication_service_1;
     var LoginComponent;
     return {
         setters:[
@@ -18,26 +18,32 @@ System.register(['angular2/core', 'angular2/common', '../../services/authenticat
             function (common_1_1) {
                 common_1 = common_1_1;
             },
+            function (router_1_1) {
+                router_1 = router_1_1;
+            },
             function (authentication_service_1_1) {
                 authentication_service_1 = authentication_service_1_1;
             }],
         execute: function() {
             LoginComponent = (function () {
-                function LoginComponent(authenticationService) {
+                function LoginComponent(router, authenticationService) {
+                    this.router = router;
                     this.authenticationService = authenticationService;
                     this.model = {};
                 }
                 LoginComponent.prototype.onSubmit = function () {
                     this.authenticationService.login(this.model);
+                    this.router.navigate(['Main']);
                 };
                 LoginComponent = __decorate([
                     core_1.Component({
                         templateUrl: 'source/components/login/login.component.html',
                         directives: [common_1.FORM_DIRECTIVES],
                     }), 
-                    __metadata('design:paramtypes', [authentication_service_1.AuthenticationService])
+                    __metadata('design:paramtypes', [(typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object, authentication_service_1.AuthenticationService])
                 ], LoginComponent);
                 return LoginComponent;
+                var _a;
             })();
             exports_1("LoginComponent", LoginComponent);
         }
