@@ -29,12 +29,13 @@ System.register(['angular2/core', 'angular2/router', './components/login/login.c
             }],
         execute: function() {
             AppComponent = (function () {
-                function AppComponent() {
+                function AppComponent(authentication) {
+                    this.authentication = authentication;
                 }
                 AppComponent = __decorate([
                     core_1.Component({
                         selector: 'my-app',
-                        template: "\n\t\t<h1>Bank Game</h1>\n\t\t<nav>\n\t\t\t<a [routerLink]=\"['Login']\">Login</a>\n\t\t</nav>\n\t\t<router-outlet></router-outlet>\n\t",
+                        template: "\n\t\t<h1>Bank Game</h1>\n\t\t<ul class=\"nav nav-tabs\">\n\t\t\t<li role=\"presentation\" *ngIf=\"authentication.isAuthenticated\"><a [routerLink]=\"['Main']\">Main</a></li>\n\t\t\t<li role=\"presentation\"><a [routerLink]=\"['Login']\">Login</a></li>\n\t\t</ul>\n\t\t<router-outlet></router-outlet>\n\t",
                         directives: [router_1.ROUTER_DIRECTIVES],
                         providers: [authentication_service_1.AuthenticationService],
                     }),
@@ -44,7 +45,7 @@ System.register(['angular2/core', 'angular2/router', './components/login/login.c
                         //   {path:'/bank',  name: 'Bank',    component: HeroDetailComponent}
                         { path: '/main', name: 'Main', component: main_component_1.MainComponent }
                     ]), 
-                    __metadata('design:paramtypes', [])
+                    __metadata('design:paramtypes', [authentication_service_1.AuthenticationService])
                 ], AppComponent);
                 return AppComponent;
             })();
