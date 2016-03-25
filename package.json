@@ -6,12 +6,22 @@
     "tsc": "tsc",
     "tsc:w": "tsc -w",
     "lite": "lite-server",
-	"http": "http-server",
+    "http": "http-server",
+    "server": "node ./server/run.js",
     "typings": "typings",
     "postinstall": "jspm install && typings install"
   },
   "license": "ISC",
-  "dependencies": {},
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "cookie-parser": "^1.4.1",
+    "ejs": "^2.4.1",
+    "express": "^4.13.4",
+    "mongodb": "^1.4.4",
+    "monk": "^1.0.1",
+    "morgan": "^1.7.0",
+    "serve-favicon": "^2.3.0"
+  },
   "devDependencies": {
     "jspm": "^0.16.31"
   },
