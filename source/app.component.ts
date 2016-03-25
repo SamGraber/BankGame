@@ -8,9 +8,9 @@ import {AuthenticationService} from './services/authentication/authentication.se
     selector: 'my-app',
     template: `
 		<h1>Bank Game</h1>
-		<nav>
-			<a [routerLink]="['Login']">Login</a>
-		</nav>
+		<ul class="nav nav-tabs">
+			<li role="presentation"><a [routerLink]="['Login']">Login</a></li>
+		</ul>
 		<router-outlet></router-outlet>
 	`,
 	directives: [ROUTER_DIRECTIVES],
