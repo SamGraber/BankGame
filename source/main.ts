@@ -4,9 +4,12 @@ import 'angular2/bundles/angular2-polyfills';
 import 'rxjs/bundles/Rx';
 import 'angular2/bundles/angular2.dev';
 import 'angular2/bundles/router.dev';
+import 'angular2/bundles/http.dev';
 import {ROUTER_PROVIDERS} from 'angular2/router';
+import {HTTP_PROVIDERS} from 'angular2/http';
+import 'rxjs/Rx';
 
 import {bootstrap}    from 'angular2/platform/browser';
 import {AppComponent} from './app.component';
 
-bootstrap(AppComponent, [ROUTER_PROVIDERS]);
+bootstrap(AppComponent, [ROUTER_PROVIDERS, HTTP_PROVIDERS]);
