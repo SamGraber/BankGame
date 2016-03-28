@@ -32,8 +32,10 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', '../../s
                     this.model = {};
                 }
                 LoginComponent.prototype.onSubmit = function () {
-                    this.authenticationService.login(this.model);
-                    this.router.navigate(['Main']);
+                    var _this = this;
+                    this.authenticationService.login(this.model).subscribe(function () {
+                        _this.router.navigate(['Main']);
+                    }, function (err) { return console.error(err); });
                 };
                 LoginComponent = __decorate([
                     core_1.Component({
