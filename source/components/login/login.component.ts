@@ -14,7 +14,8 @@ export class LoginComponent {
 			, private authenticationService: AuthenticationService) {}
 	
 	onSubmit(): void {
-		this.authenticationService.login(this.model);
-		this.router.navigate(['Main']);
+		this.authenticationService.login(this.model).subscribe(() => {
+			this.router.navigate(['Main']);
+		}, err => console.error(err));
 	}
 }
