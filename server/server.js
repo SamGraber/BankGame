@@ -27,7 +27,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use('/jspm_packages', express.static('jspm_packages'));
+app.use('/node_modules', express.static('node_modules'));
 app.use('/config.js', express.static('config.js'));
 app.use('/assets', express.static('assets'));
 app.use('/source', express.static('source'));
