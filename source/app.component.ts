@@ -31,5 +31,14 @@ import {AccountService} from './services/account/account.service';
   {path:'/account',  name: 'Account',    component: AccountComponent}
 ])
 export class AppComponent { 
-	constructor(public authentication: AuthenticationService) {}
+	constructor(public authentication: AuthenticationService
+						, private router: Router) {}
+	
+	ngOnInit(): void {
+		if (this.authentication.restoreSession()) {
+			this.router.navigate(['Account']);
+		} else {
+			this.router.navigate(['Login']);
+		}
+	}
 }
