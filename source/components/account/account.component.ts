@@ -21,4 +21,8 @@ export class AccountComponent {
 	startWithdrawal(): void {
 		this.router.navigate(['Withdraw', { accountId: this.account._id }]);
 	}
+	
+	startDeposit(): void {
+		this.router.navigate(['Deposit', { accountId: this.account._id }]);
+	}
 }

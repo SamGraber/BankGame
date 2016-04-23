@@ -4,6 +4,7 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { AccountComponent } from './components/account/account.component';
 import { WithdrawComponent } from './components/withdraw/withdraw.component';
+import { DepositComponent } from './components/deposit/deposit.component';
 import { AuthenticationService } from './services/authentication/authentication.service';
 import { RequestService } from './services/request/request.service';
 import { AccountService } from './services/account/account.service';
@@ -19,6 +20,7 @@ import { AccountService } from './services/account/account.service';
   {path:'/register', name: 'Register',   component: RegisterComponent},
   {path:'/account',  name: 'Account',    component: AccountComponent},
   {path:'/withdraw/:accountId', name: 'Withdraw',   component: WithdrawComponent},
+  {path:'/deposit/:accountId',  name: 'Deposit',    component: DepositComponent},
 ])
 export class AppComponent { 
 	constructor(public authentication: AuthenticationService
