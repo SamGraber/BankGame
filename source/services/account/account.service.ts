@@ -14,9 +14,14 @@ export class AccountService {
 	constructor(private http: RequestService) {}
 	
 	getAccount(user: IUser): Observable<IAccount> {
+		let stream: Observable<IAccount>;
 		if (user.accountId == null) {
-			return this.http.post('/account/new', user);			
+			stream = this.http.post('/account/new', user);			
 		}
-		return this.http.get('/account/' + user.accountId);
-	}	
+		stream = this.http.get('/account/' + user.accountId);
+		return stream.map((account: IAccount) => { 
+			account.user = user;
+			return account;
+		});
+	}
 }
