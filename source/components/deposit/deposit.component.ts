@@ -1,3 +1,4 @@
+import * as _ from 'lodash';
 import { Component } from 'angular2/core';
 import { RouteParams, Router } from 'angular2/router';
 import { AccountService, IAccount } from '../../services/account/account.service';
@@ -19,8 +20,9 @@ export class DepositComponent {
 	}
 	
 	deposit(): void {
-		this.account.balance += this.amount;
-		this.accountService.updateAccount(this.account).subscribe((): void => {
+		const updatedAccount: IAccount = _.clone(this.account);
+		updatedAccount.balance += this.amount;
+		this.accountService.updateAccount(updatedAccount).subscribe((): void => {
 			this.router.navigate(['Account']);
 		});
 	}
