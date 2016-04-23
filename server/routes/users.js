@@ -15,9 +15,15 @@ router.get('/', function(req, res) {
 router.post('/login', function(req, res) {
 	var db = req.db;
 	var users = db.get('users');
-	users.findOne({ 'username': req.body.username }, {}, function(e, docs) {
-		console.log(docs);
-		res.json(docs);
+	users.findOne({ 'username': req.body.username }, {}, function(e, user) {
+		if (user) {
+			if (user.password === req.body.password) {
+				res.json(user);
+			}
+			res.status(500).send('Incorrect password');
+			return;
+		}
+		res.status(500).send('No user with that username exists');
 	});
 });
 
