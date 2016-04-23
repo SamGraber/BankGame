@@ -11,6 +11,7 @@ var monk = require('monk');
 var db = monk('localhost:27017/bankgame');
 
 var users = require('./routes/users');
+var accounts = require('./routes/accounts');
 // routes needs to be last since we * all empty routes to the index file
 var routes = require('./routes/index');
 
@@ -39,6 +40,7 @@ app.use(function(req,res,next){
 });
 
 app.use('/users', users);
+app.use('/account', accounts);
 app.use('/', routes);
 
 /// catch 404 and forwarding to error handler
