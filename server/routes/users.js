@@ -1,3 +1,4 @@
+var _ = require('lodash');
 var express = require('express');
 var router = express.Router();
 
@@ -31,8 +32,14 @@ router.post('/login', function(req, res) {
 router.post('/register', function(req, res) {
 	var db = req.db;
 	var users = db.get('users');
-	users.insert(req.body, function(e, user) {
-		res.json(user);
+	users.find({ 'username': req.body.username }, {}, function(err, results) {
+		if (_.some(results)) {
+			res.status(500).send('A user with that username already exists');
+			return;
+		}
+		users.insert(req.body, function(e, user) {
+			res.json(user);
+		});
 	});
 });
 
