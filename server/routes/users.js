@@ -27,4 +27,12 @@ router.post('/login', function(req, res) {
 	});
 });
 
+router.post('/register', function(req, res) {
+	var db = req.db;
+	var users = db.get('users');
+	users.insert(req.body, function(e, user) {
+		res.json(user);
+	});
+});
+
 module.exports = router;
