@@ -15,7 +15,7 @@ router.get('/', function(req, res) {
 router.get('/:id', function(req, res) {
     var db = req.db;
     var accounts = db.get('accounts');
-    accounts.find({ '_id': req.params.id },{},function(e,account){
+    accounts.findOne({ '_id': req.params.id },{},function(e,account){
         if (account) {
 			res.json(account);
 			return;
