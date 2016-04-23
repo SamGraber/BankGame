@@ -40,13 +40,26 @@ System.register(['angular2/core', 'angular2/router', './components/login/login.c
             }],
         execute: function() {
             AppComponent = (function () {
-                function AppComponent(authentication) {
+                function AppComponent(authentication, router) {
                     this.authentication = authentication;
+                    this.router = router;
                 }
+                AppComponent.prototype.ngOnInit = function () {
+                    if (this.authentication.restoreSession()) {
+                        this.router.navigate(['Account']);
+                    }
+                    else {
+                        this.router.navigate(['Login']);
+                    }
+                };
+                AppComponent.prototype.logout = function () {
+                    this.authentication.logout();
+                    this.router.navigate(['Login']);
+                };
                 AppComponent = __decorate([
                     core_1.Component({
                         selector: 'my-app',
-                        template: "\n\t\t<h1>Bank Game</h1>\n\t\t<ul class=\"nav nav-tabs\" *ngIf=\"authentication.isAuthenticated\">\n\t\t\t<li role=\"presentation\"><a [routerLink]=\"['Account']\">Account</a></li>\n\t\t</ul>\n\t\t<ul class=\"nav nav-tabs\" *ngIf=\"!authentication.isAuthenticated\">\n\t\t\t<li role=\"presentation\"><a [routerLink]=\"['Login']\">Login</a></li>\n\t\t\t<li role=\"presentation\"><a [routerLink]=\"['Register']\">Register</a></li>\n\t\t</ul>\n\t\t<router-outlet></router-outlet>\n\t",
+                        templateUrl: 'source/app.component.html',
                         directives: [router_1.ROUTER_DIRECTIVES],
                         providers: [authentication_service_1.AuthenticationService, request_service_1.RequestService, account_service_1.AccountService],
                     }),
@@ -57,7 +70,7 @@ System.register(['angular2/core', 'angular2/router', './components/login/login.c
                         //   {path:'/bank',  name: 'Bank',    component: HeroDetailComponent}
                         { path: '/account', name: 'Account', component: account_component_1.AccountComponent }
                     ]), 
-                    __metadata('design:paramtypes', [authentication_service_1.AuthenticationService])
+                    __metadata('design:paramtypes', [authentication_service_1.AuthenticationService, router_1.Router])
                 ], AppComponent);
                 return AppComponent;
             }());

@@ -28,9 +28,9 @@ System.register(['angular2/core', '../request/request.service'], function(export
                 AccountService.prototype.getAccount = function (user) {
                     var stream;
                     if (user.accountId == null) {
-                        stream = this.http.post('/account/new', user);
+                        stream = this.http.post('/api/account/new', user);
                     }
-                    stream = this.http.get('/account/' + user.accountId);
+                    stream = this.http.get('/api/account/' + user.accountId);
                     return stream.map(function (account) {
                         account.user = user;
                         return account;

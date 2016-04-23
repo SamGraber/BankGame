@@ -26,19 +26,33 @@ System.register(['angular2/core', '../request/request.service'], function(export
                     this.http = http;
                     this.isAuthenticated = false;
                 }
+                AuthenticationService.prototype.restoreSession = function () {
+                    if (localStorage.loggedInUser) {
+                        this.loggedInUser = JSON.parse(localStorage.loggedInUser);
+                        this.isAuthenticated = true;
+                        return true;
+                    }
+                    return false;
+                };
                 AuthenticationService.prototype.login = function (credentials) {
                     var _this = this;
-                    return this.http.post('/users/login', credentials)
+                    return this.http.post('/api/users/login', credentials)
                         .map(function (user) {
                         _this.loggedInUser = user;
                         console.log(user.username + ' is now logged in');
+                        localStorage.loggedInUser = JSON.stringify(user);
                         _this.isAuthenticated = true;
                         return _this.loggedInUser;
                     });
                 };
+                AuthenticationService.prototype.logout = function () {
+                    localStorage.removeItem('loggedInUser');
+                    this.loggedInUser = null;
+                    this.isAuthenticated = false;
+                };
                 AuthenticationService.prototype.register = function (credentials) {
                     var _this = this;
-                    return this.http.post('/users/register', credentials)
+                    return this.http.post('/api/users/register', credentials)
                         .map(function (user) {
                         _this.loggedInUser = user;
                         _this.isAuthenticated = true;
