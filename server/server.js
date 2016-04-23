@@ -10,10 +10,10 @@ var mongo = require('mongodb');
 var monk = require('monk');
 var db = monk('localhost:27017/bankgame');
 
-var users = require('./routes/users');
-var accounts = require('./routes/accounts');
+var users = require('./routes/userApi');
+var accounts = require('./routes/accountApi');
 // routes needs to be last since we * all empty routes to the index file
-var routes = require('./routes/index');
+var routes = require('./routes/serveApp');
 
 var app = express();
 
