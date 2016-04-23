@@ -24,6 +24,16 @@ router.get('/:id', function(req, res) {
     });
 });
 
+router.put('/:id', function(req, res) {
+	var db = req.db;
+	var accounts = db.get('accounts');
+	accounts.update({ '_id': req.params.id }
+	, { '$set': {'balance': req.body.balance}}
+	, function(err, account) {
+		res.json(account);
+	});
+})
+
 router.post('/new', function(req, res) {
 	var db = req.db;
 	var users = db.get('users');

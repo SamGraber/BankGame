@@ -23,6 +23,17 @@ export class RequestService {
 					.catch(this.handleError);
 	}
 	
+	put(url: string, body: any): Observable<any> {
+		const jsonBody = JSON.stringify(body);
+		const headers = new Headers({ 'Content-Type': 'application/json' });
+		const options = new RequestOptions({ headers: headers });
+		return this.http.put(url, jsonBody, options)
+					.map(res =>  {
+						return res.json();
+					})
+					.catch(this.handleError);
+	}
+	
 	private extractData(res: Response) {
 		if (res.status < 200 || res.status >= 300) {
 		throw new Error('Bad response status: ' + res.status);

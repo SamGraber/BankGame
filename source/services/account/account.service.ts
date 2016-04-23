@@ -23,4 +23,8 @@ export class AccountService {
 		}
 		return this.getAccount(user.accountId);
 	}
+	
+	updateAccount(account: IAccount): Observable<IAccount> {
+		return this.http.put('api/account/' + account._id, account);
+	}
 }

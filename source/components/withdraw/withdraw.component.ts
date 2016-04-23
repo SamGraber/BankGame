@@ -1,5 +1,5 @@
 import { Component } from 'angular2/core';
-import { RouteParams } from 'angular2/router';
+import { RouteParams, Router } from 'angular2/router';
 import { AccountService, IAccount } from '../../services/account/account.service';
 
 @Component({
@@ -10,7 +10,8 @@ export class WithdrawComponent {
 	amount: number;
 	
 	constructor(private accountService: AccountService
-			, private routeParams: RouteParams) {}
+			, private routeParams: RouteParams
+			, private router: Router) {}
 	
 	ngOnInit(): void {
 		this.accountService.getAccount(this.routeParams.get('accountId'))
@@ -18,6 +19,9 @@ export class WithdrawComponent {
 	}
 	
 	withdraw(): void {
-		console.log(this.amount);
+		this.account.balance -= this.amount;
+		this.accountService.updateAccount(this.account).subscribe((): void => {
+			this.router.navigate(['Account']);
+		});
 	}
 }
