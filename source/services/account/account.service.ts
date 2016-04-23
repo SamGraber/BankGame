@@ -4,6 +4,7 @@ import { RequestService } from '../request/request.service';
 import { IUser } from '../authentication/authentication.service';
 
 export interface IAccount {
+	_id: number;
 	user: IUser;
 	balance: number;
 }
