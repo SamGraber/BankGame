@@ -6,7 +6,7 @@ Select the amount you would like to withdraw:
 <form (ngSubmit)="withdraw()">
 	<div class="form-group">
 		<input type="number" class="form-control" [(ngModel)]="amount" 
-			   ngControl="amount" required />
+			   ngControl="amount" min="0" required />
 	</div>
 	<button class="btn btn-default" type="submit">Withdraw</button>
 </form>
