@@ -19,7 +19,7 @@ export class AuthenticationService {
 	constructor(private http: Http) {}
 	
 	login(credentials: ICredentials): Observable<IUser> {
-		let body = JSON.stringify({ name });
+		let body = JSON.stringify(credentials);
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({ headers: headers });
 		return this.http.post('/users/login', body, options)
