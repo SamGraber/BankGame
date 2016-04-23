@@ -36,7 +36,7 @@ export class AuthenticationService {
 	}
 	
 	login(credentials: ICredentials): Observable<IUser> {
-		return this.http.post('/users/login', credentials)
+		return this.http.post('/api/users/login', credentials)
 					.map(user =>  {
 						this.loggedInUser = user;
 						console.log(user.username + ' is now logged in');
@@ -53,7 +53,7 @@ export class AuthenticationService {
 	}
 	
 	register(credentials: ICredentials): Observable<IUser> {
-		return this.http.post('/users/register', credentials)
+		return this.http.post('/api/users/register', credentials)
 					.map(user =>  {
 						this.loggedInUser = user;
 						this.isAuthenticated = true;

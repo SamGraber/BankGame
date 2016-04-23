@@ -39,8 +39,8 @@ app.use(function(req,res,next){
     next();
 });
 
-app.use('/users', users);
-app.use('/account', accounts);
+app.use('/api/users', users);
+app.use('/api/account', accounts);
 app.use('/', routes);
 
 /// catch 404 and forwarding to error handler

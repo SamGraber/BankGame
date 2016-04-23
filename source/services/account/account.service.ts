@@ -16,9 +16,9 @@ export class AccountService {
 	getAccount(user: IUser): Observable<IAccount> {
 		let stream: Observable<IAccount>;
 		if (user.accountId == null) {
-			stream = this.http.post('/account/new', user);			
+			stream = this.http.post('/api/account/new', user);			
 		}
-		stream = this.http.get('/account/' + user.accountId);
+		stream = this.http.get('/api/account/' + user.accountId);
 		return stream.map((account: IAccount) => { 
 			account.user = user;
 			return account;
