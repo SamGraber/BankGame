@@ -19,15 +19,14 @@ export class AuthenticationService {
 	constructor(private http: Http) {}
 	
 	login(credentials: ICredentials): Observable<IUser> {
-		console.log(credentials.username + ' is now logged in');
-		this.isAuthenticated = true;
-		
 		let body = JSON.stringify({ name });
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({ headers: headers });
 		return this.http.post('/users/login', body, options)
 					.map(res =>  {
 						this.loggedInUser = res.json().data;
+						console.log(credentials.username + ' is now logged in');
+						this.isAuthenticated = true;
 						return this.loggedInUser;
 					})
 					.catch(err => console.error(err));
