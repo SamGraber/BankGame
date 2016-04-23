@@ -18,6 +18,7 @@ import { AccountService } from './services/account/account.service';
   {path:'/login',    name: 'Login',      component: LoginComponent},
   {path:'/register', name: 'Register',   component: RegisterComponent},
   {path:'/account',  name: 'Account',    component: AccountComponent},
+  {path:'/withdraw/:accountId', name: 'Withdraw',   component: WithdrawComponent},
 ])
 export class AppComponent { 
 	constructor(public authentication: AuthenticationService

@@ -1,4 +1,5 @@
-import {Component} from 'angular2/core';
+import { Component } from 'angular2/core';
+import { Router } from 'angular2/router';
 import { AccountService, IAccount } from '../../services/account/account.service';
 import { AuthenticationService } from '../../services/authentication/authentication.service';
 
@@ -9,10 +10,15 @@ export class AccountComponent {
 	account: IAccount;
 	
 	constructor(private accountService: AccountService
-			, public authentication: AuthenticationService) {}
+			, public authentication: AuthenticationService
+			, private router: Router) {}
 	
 	ngOnInit(): void {
 		this.accountService.getAccountForUser(this.authentication.loggedInUser)
 			.subscribe((account: IAccount): IAccount => this.account = account);
+	}
+	
+	startWithdrawal(): void {
+		this.router.navigate(['Withdraw', { accountId: this.account._id }]);
 	}
 }
