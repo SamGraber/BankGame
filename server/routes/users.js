@@ -22,10 +22,10 @@ router.post('/login', function(req, res) {
 				res.json(user);
 				return;
 			}
-			res.status(500).send('Incorrect password');
+			res.status(400).send('Incorrect password');
 			return;
 		}
-		res.status(500).send('No user with that username exists');
+		res.status(400).send('No user with that username exists');
 	});
 });
 
@@ -34,7 +34,7 @@ router.post('/register', function(req, res) {
 	var users = db.get('users');
 	users.find({ 'username': req.body.username }, {}, function(err, results) {
 		if (_.some(results)) {
-			res.status(500).send('A user with that username already exists');
+			res.status(400).send('A user with that username already exists');
 			return;
 		}
 		users.insert(req.body, function(e, user) {
