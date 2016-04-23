@@ -18,6 +18,7 @@ router.get('/:id', function(req, res) {
     accounts.find({ '_id': req.params.id },{},function(e,account){
         if (account) {
 			res.json(account);
+			return;
 		}
 		res.status(500).send('The specified account was not found');
     });
