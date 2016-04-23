@@ -13,7 +13,7 @@ export interface IAccount {
 export class AccountService {
 	constructor(private http: RequestService) {}
 	
-	getAccount(accountId: number): Observable<IAccount> {
+	getAccount(accountId: string): Observable<IAccount> {
 		return this.http.get('/api/account/' + accountId);
 	}
 	

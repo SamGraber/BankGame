@@ -11,7 +11,7 @@ interface ISessionStorage {
 
 export interface IUser {
 	username: string;
-	accountId: number;
+	accountId: string;
 }
 
 export interface ICredentials {
