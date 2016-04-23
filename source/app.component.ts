@@ -4,6 +4,7 @@ import {LoginComponent} from './components/login/login.component';
 import {RegisterComponent} from './components/register/register.component';
 import {MainComponent} from './components/main/main.component';
 import {AuthenticationService} from './services/authentication/authentication.service';
+import {RequestService} from './services/request/request.service';
 
 @Component({
     selector: 'my-app',
@@ -19,7 +20,7 @@ import {AuthenticationService} from './services/authentication/authentication.se
 		<router-outlet></router-outlet>
 	`,
 	directives: [ROUTER_DIRECTIVES],
-	providers: [AuthenticationService],
+	providers: [AuthenticationService, RequestService],
 })
 @RouteConfig([
   {path:'/login',    name: 'Login',      component: LoginComponent},
