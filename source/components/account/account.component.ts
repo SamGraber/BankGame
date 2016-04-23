@@ -9,10 +9,10 @@ export class AccountComponent {
 	account: IAccount;
 	
 	constructor(private accountService: AccountService
-			, private authentication: AuthenticationService) {}
+			, public authentication: AuthenticationService) {}
 	
 	ngOnInit(): void {
-		this.accountService.getAccount(this.authentication.loggedInUser)
+		this.accountService.getAccountForUser(this.authentication.loggedInUser)
 			.subscribe((account: IAccount): IAccount => this.account = account);
 	}
 }

@@ -13,15 +13,14 @@ export interface IAccount {
 export class AccountService {
 	constructor(private http: RequestService) {}
 	
-	getAccount(user: IUser): Observable<IAccount> {
-		let stream: Observable<IAccount>;
+	getAccount(accountId: number): Observable<IAccount> {
+		return this.http.get('/api/account/' + accountId);
+	}
+	
+	getAccountForUser(user: IUser): Observable<IAccount> {
 		if (user.accountId == null) {
-			stream = this.http.post('/api/account/new', user);			
+			return this.http.post('/api/account/new', user);			
 		}
-		stream = this.http.get('/api/account/' + user.accountId);
-		return stream.map((account: IAccount) => { 
-			account.user = user;
-			return account;
-		});
+		return this.getAccount(user.accountId);
 	}
 }
