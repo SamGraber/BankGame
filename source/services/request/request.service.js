@@ -28,15 +28,27 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/observable'], function(
                 function RequestService(http) {
                     this.http = http;
                 }
+                RequestService.prototype.get = function (url) {
+                    return this.http.get(url)
+                        .map(this.extractData)
+                        .catch(this.handleError);
+                };
                 RequestService.prototype.post = function (url, body) {
                     var jsonBody = JSON.stringify(body);
                     var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
                     var options = new http_1.RequestOptions({ headers: headers });
                     return this.http.post(url, jsonBody, options)
                         .map(function (res) {
-                        return res.json().data;
+                        return res.json();
                     })
                         .catch(this.handleError);
+                };
+                RequestService.prototype.extractData = function (res) {
+                    if (res.status < 200 || res.status >= 300) {
+                        throw new Error('Bad response status: ' + res.status);
+                    }
+                    var body = res.json();
+                    return body.data || {};
                 };
                 RequestService.prototype.handleError = function (error) {
                     // In a real world app, we might send the error to remote logging infrastructure

@@ -36,7 +36,7 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', '../../s
                 RegisterComponent.prototype.onSubmit = function () {
                     var _this = this;
                     this.authenticationService.register(this.model).subscribe(function () {
-                        _this.router.navigate(['Main']);
+                        _this.router.navigate(['Account']);
                     }, function (err) { return console.error(err); });
                 };
                 RegisterComponent = __decorate([
