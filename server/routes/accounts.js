@@ -29,7 +29,7 @@ router.post('/new', function(req, res) {
 	var accounts = db.get('accounts');
 	users.findOne({ 'username': req.body.username }, {}, function(err, user) {
 		if (user) {
-			accounts.insert({}, function(err, account) {
+			accounts.insert({ 'balance': 0 }, function(err, account) {
 				users.update({ 'username': req.body.username }, { '$set': { 'accountId': account._id }}, function(err, updatedUser) {
 					res.json(account);
 				});
