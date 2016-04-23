@@ -15,7 +15,7 @@ export class LoginComponent {
 	
 	onSubmit(): void {
 		this.authenticationService.login(this.model).subscribe(() => {
-			this.router.navigate(['Main']);
+			this.router.navigate(['Account']);
 		}, err => console.error(err));
 	}
 }
