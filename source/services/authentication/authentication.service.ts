@@ -1,5 +1,5 @@
 import {Injectable} from 'angular2/core';
-import {Observable} from 'rxjs/observable';
+import { Observable } from 'rxjs/Observable';
 import { RequestService } from '../request/request.service';
 
 declare var localStorage: ISessionStorage;
