@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/http', 'rxjs/observable'], function(exports_1, context_1) {
+System.register(['toastr', 'angular2/core', 'angular2/http', 'rxjs/Observable'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,18 +10,21 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/observable'], function(
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, http_1, observable_1;
+    var toastr, core_1, http_1, Observable_1;
     var RequestService;
     return {
         setters:[
+            function (toastr_1) {
+                toastr = toastr_1;
+            },
             function (core_1_1) {
                 core_1 = core_1_1;
             },
             function (http_1_1) {
                 http_1 = http_1_1;
             },
-            function (observable_1_1) {
-                observable_1 = observable_1_1;
+            function (Observable_1_1) {
+                Observable_1 = Observable_1_1;
             }],
         execute: function() {
             RequestService = (function () {
@@ -64,7 +67,13 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/observable'], function(
                     // In a real world app, we might send the error to remote logging infrastructure
                     var errMsg = error._body || 'Server error';
                     console.error(errMsg); // log to console instead
-                    return observable_1.Observable.throw(errMsg);
+                    if (error.status >= 500) {
+                        toastr.error('An error has occured. Please contact support for further assistance');
+                    }
+                    else {
+                        toastr.warning(errMsg);
+                    }
+                    return Observable_1.Observable.throw(errMsg);
                 };
                 RequestService = __decorate([
                     core_1.Injectable(), 

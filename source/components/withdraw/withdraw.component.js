@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', '../../services/account/account.service'], function(exports_1, context_1) {
+System.register(['lodash', 'angular2/core', 'angular2/router', '../../services/account/account.service'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,10 +10,13 @@ System.register(['angular2/core', 'angular2/router', '../../services/account/acc
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, account_service_1;
+    var _, core_1, router_1, account_service_1;
     var WithdrawComponent;
     return {
         setters:[
+            function (_1) {
+                _ = _1;
+            },
             function (core_1_1) {
                 core_1 = core_1_1;
             },
@@ -37,8 +40,9 @@ System.register(['angular2/core', 'angular2/router', '../../services/account/acc
                 };
                 WithdrawComponent.prototype.withdraw = function () {
                     var _this = this;
-                    this.account.balance -= this.amount;
-                    this.accountService.updateAccount(this.account).subscribe(function () {
+                    var updatedAccount = _.clone(this.account);
+                    updatedAccount.balance -= this.amount;
+                    this.accountService.updateAccount(updatedAccount).subscribe(function () {
                         _this.router.navigate(['Account']);
                     });
                 };
