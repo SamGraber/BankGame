@@ -9,17 +9,7 @@ import {AccountService} from './services/account/account.service';
 
 @Component({
     selector: 'my-app',
-    template: `
-		<h1>Bank Game</h1>
-		<ul class="nav nav-tabs" *ngIf="authentication.isAuthenticated">
-			<li role="presentation"><a [routerLink]="['Account']">Account</a></li>
-		</ul>
-		<ul class="nav nav-tabs" *ngIf="!authentication.isAuthenticated">
-			<li role="presentation"><a [routerLink]="['Login']">Login</a></li>
-			<li role="presentation"><a [routerLink]="['Register']">Register</a></li>
-		</ul>
-		<router-outlet></router-outlet>
-	`,
+    templateUrl: 'source/app.component.html',
 	directives: [ROUTER_DIRECTIVES],
 	providers: [AuthenticationService, RequestService, AccountService],
 })
