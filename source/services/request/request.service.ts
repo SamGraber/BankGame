@@ -28,7 +28,7 @@ export class RequestService {
 		throw new Error('Bad response status: ' + res.status);
 		}
 		let body = res.json();
-		return body.data || { };
+		return body || { };
 	}
 	
 	private handleError (error: any) {
