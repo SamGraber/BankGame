@@ -1,9 +1,17 @@
 import {Injectable} from 'angular2/core';
-import {Http, Response, Headers, RequestOptions} from 'angular2/http';
 import {Observable} from 'rxjs/observable';
+import { RequestService } from '../request/request.service';
+
+declare var localStorage: ISessionStorage;
+
+interface ISessionStorage {
+	loggedInUser: string;
+	removeItem(item: string): void;
+}
 
 export interface IUser {
 	username: string;
+	accountId: number;
 }
 
 export interface ICredentials {
@@ -16,20 +24,40 @@ export class AuthenticationService {
 	isAuthenticated: boolean = false;
 	loggedInUser: IUser;
 	
-	constructor(private http: Http) {}
+	constructor(private http: RequestService) {}
+	
+	restoreSession(): boolean {
+		if (localStorage.loggedInUser) {
+			this.loggedInUser = JSON.parse(localStorage.loggedInUser);
+			this.isAuthenticated = true;
+			return true;
+		}
+		return false;
+	}
 	
 	login(credentials: ICredentials): Observable<IUser> {
-		console.log(credentials.username + ' is now logged in');
-		this.isAuthenticated = true;
-		
-		let body = JSON.stringify({ name });
-		let headers = new Headers({ 'Content-Type': 'application/json' });
-		let options = new RequestOptions({ headers: headers });
-		return this.http.post('/users/login', body, options)
-					.map(res =>  {
-						this.loggedInUser = res.json().data;
+		return this.http.post('/api/users/login', credentials)
+					.map(user =>  {
+						this.loggedInUser = user;
+						console.log(user.username + ' is now logged in');
+						localStorage.loggedInUser = JSON.stringify(user);
+						this.isAuthenticated = true;
 						return this.loggedInUser;
-					})
-					.catch(err => console.error(err));
+					});
+	}
+	
+	logout(): void {
+		localStorage.removeItem('loggedInUser');
+		this.loggedInUser = null;
+		this.isAuthenticated = false;
+	}
+	
+	register(credentials: ICredentials): Observable<IUser> {
+		return this.http.post('/api/users/register', credentials)
+					.map(user =>  {
+						this.loggedInUser = user;
+						this.isAuthenticated = true;
+						return this.loggedInUser;
+					});
 	}
 }

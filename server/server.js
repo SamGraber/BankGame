@@ -11,6 +11,7 @@ var monk = require('monk');
 var db = monk('localhost:27017/bankgame');
 
 var users = require('./routes/users');
+var accounts = require('./routes/accounts');
 // routes needs to be last since we * all empty routes to the index file
 var routes = require('./routes/index');
 
@@ -27,7 +28,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use('/jspm_packages', express.static('jspm_packages'));
+app.use('/node_modules', express.static('node_modules'));
 app.use('/config.js', express.static('config.js'));
 app.use('/assets', express.static('assets'));
 app.use('/source', express.static('source'));
@@ -38,7 +39,8 @@ app.use(function(req,res,next){
     next();
 });
 
-app.use('/users', users);
+app.use('/api/users', users);
+app.use('/api/account', accounts);
 app.use('/', routes);
 
 /// catch 404 and forwarding to error handler
@@ -57,7 +59,7 @@ if (app.get('env') === 'development') {
         res.status(err.status || 500);
 		console.log(err.message);
 		console.log(err);
-        res.render('../source/views/error.html');
+        res.render('error.html');
     });
 }
 
@@ -66,7 +68,7 @@ if (app.get('env') === 'development') {
 app.use(function(err, req, res, next) {
     res.status(err.status || 500);
 	console.log(err.message);
-    res.render('../source/views/error.html');
+    res.render('error.html');
 });
 
 

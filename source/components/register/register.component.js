@@ -11,7 +11,7 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', '../../s
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1, common_1, router_1, authentication_service_1;
-    var LoginComponent;
+    var RegisterComponent;
     return {
         setters:[
             function (core_1_1) {
@@ -27,29 +27,29 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', '../../s
                 authentication_service_1 = authentication_service_1_1;
             }],
         execute: function() {
-            LoginComponent = (function () {
-                function LoginComponent(router, authenticationService) {
+            RegisterComponent = (function () {
+                function RegisterComponent(router, authenticationService) {
                     this.router = router;
                     this.authenticationService = authenticationService;
                     this.model = {};
                 }
-                LoginComponent.prototype.onSubmit = function () {
+                RegisterComponent.prototype.onSubmit = function () {
                     var _this = this;
-                    this.authenticationService.login(this.model).subscribe(function () {
+                    this.authenticationService.register(this.model).subscribe(function () {
                         _this.router.navigate(['Account']);
                     }, function (err) { return console.error(err); });
                 };
-                LoginComponent = __decorate([
+                RegisterComponent = __decorate([
                     core_1.Component({
-                        templateUrl: 'source/components/login/login.component.html',
+                        templateUrl: 'source/components/register/register.component.html',
                         directives: [common_1.FORM_DIRECTIVES],
                     }), 
                     __metadata('design:paramtypes', [router_1.Router, authentication_service_1.AuthenticationService])
-                ], LoginComponent);
-                return LoginComponent;
+                ], RegisterComponent);
+                return RegisterComponent;
             }());
-            exports_1("LoginComponent", LoginComponent);
+            exports_1("RegisterComponent", RegisterComponent);
         }
     }
 });
-//# sourceMappingURL=login.component.js.map
+//# sourceMappingURL=register.component.js.map

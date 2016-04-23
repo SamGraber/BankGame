@@ -15,9 +15,24 @@ router.get('/', function(req, res) {
 router.post('/login', function(req, res) {
 	var db = req.db;
 	var users = db.get('users');
-	users.find({ 'username': req.body.username }, {}, function(e, docs) {
-		console.log(docs);]
-		res.json(docs);
+	users.findOne({ 'username': req.body.username }, {}, function(e, user) {
+		if (user) {
+			if (user.password === req.body.password) {
+				res.json(user);
+				return;
+			}
+			res.status(500).send('Incorrect password');
+			return;
+		}
+		res.status(500).send('No user with that username exists');
+	});
+});
+
+router.post('/register', function(req, res) {
+	var db = req.db;
+	var users = db.get('users');
+	users.insert(req.body, function(e, user) {
+		res.json(user);
 	});
 });
 

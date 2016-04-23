@@ -1,4 +1,6 @@
-System.register(['angular2/core', 'angular2/router', './components/login/login.component', './components/main/main.component', './services/authentication/authentication.service'], function(exports_1) {
+System.register(['angular2/core', 'angular2/router', './components/login/login.component', './components/register/register.component', './components/account/account.component', './services/authentication/authentication.service', './services/request/request.service', './services/account/account.service'], function(exports_1, context_1) {
+    "use strict";
+    var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,7 +10,7 @@ System.register(['angular2/core', 'angular2/router', './components/login/login.c
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, login_component_1, main_component_1, authentication_service_1;
+    var core_1, router_1, login_component_1, register_component_1, account_component_1, authentication_service_1, request_service_1, account_service_1;
     var AppComponent;
     return {
         setters:[
@@ -21,34 +23,57 @@ System.register(['angular2/core', 'angular2/router', './components/login/login.c
             function (login_component_1_1) {
                 login_component_1 = login_component_1_1;
             },
-            function (main_component_1_1) {
-                main_component_1 = main_component_1_1;
+            function (register_component_1_1) {
+                register_component_1 = register_component_1_1;
+            },
+            function (account_component_1_1) {
+                account_component_1 = account_component_1_1;
             },
             function (authentication_service_1_1) {
                 authentication_service_1 = authentication_service_1_1;
+            },
+            function (request_service_1_1) {
+                request_service_1 = request_service_1_1;
+            },
+            function (account_service_1_1) {
+                account_service_1 = account_service_1_1;
             }],
         execute: function() {
             AppComponent = (function () {
-                function AppComponent(authentication) {
+                function AppComponent(authentication, router) {
                     this.authentication = authentication;
+                    this.router = router;
                 }
+                AppComponent.prototype.ngOnInit = function () {
+                    if (this.authentication.restoreSession()) {
+                        this.router.navigate(['Account']);
+                    }
+                    else {
+                        this.router.navigate(['Login']);
+                    }
+                };
+                AppComponent.prototype.logout = function () {
+                    this.authentication.logout();
+                    this.router.navigate(['Login']);
+                };
                 AppComponent = __decorate([
                     core_1.Component({
                         selector: 'my-app',
-                        template: "\n\t\t<h1>Bank Game</h1>\n\t\t<ul class=\"nav nav-tabs\">\n\t\t\t<li role=\"presentation\" *ngIf=\"authentication.isAuthenticated\"><a [routerLink]=\"['Main']\">Main</a></li>\n\t\t\t<li role=\"presentation\"><a [routerLink]=\"['Login']\">Login</a></li>\n\t\t</ul>\n\t\t<router-outlet></router-outlet>\n\t",
+                        templateUrl: 'source/app.component.html',
                         directives: [router_1.ROUTER_DIRECTIVES],
-                        providers: [authentication_service_1.AuthenticationService],
+                        providers: [authentication_service_1.AuthenticationService, request_service_1.RequestService, account_service_1.AccountService],
                     }),
                     router_1.RouteConfig([
                         { path: '/login', name: 'Login', component: login_component_1.LoginComponent },
+                        { path: '/register', name: 'Register', component: register_component_1.RegisterComponent },
                         //   {path:'/user',  name: 'Profile', component: HeroListComponent},
                         //   {path:'/bank',  name: 'Bank',    component: HeroDetailComponent}
-                        { path: '/main', name: 'Main', component: main_component_1.MainComponent }
+                        { path: '/account', name: 'Account', component: account_component_1.AccountComponent }
                     ]), 
-                    __metadata('design:paramtypes', [authentication_service_1.AuthenticationService])
+                    __metadata('design:paramtypes', [authentication_service_1.AuthenticationService, router_1.Router])
                 ], AppComponent);
                 return AppComponent;
-            })();
+            }());
             exports_1("AppComponent", AppComponent);
         }
     }
