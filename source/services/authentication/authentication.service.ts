@@ -6,6 +6,7 @@ declare var localStorage: ISessionStorage;
 
 interface ISessionStorage {
 	loggedInUser: string;
+	removeItem(item: string): void;
 }
 
 export interface IUser {
@@ -46,7 +47,9 @@ export class AuthenticationService {
 	}
 	
 	logout(): void {
-		localStorage.loggedInUser = null;
+		localStorage.removeItem('loggedInUser');
+		this.loggedInUser = null;
+		this.isAuthenticated = false;
 	}
 	
 	register(credentials: ICredentials): Observable<IUser> {
