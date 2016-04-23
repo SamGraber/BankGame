@@ -6,6 +6,12 @@ import {Observable} from 'rxjs/observable';
 export class RequestService {
 	constructor(private http: Http) {}
 	
+	get(url: string): Observable<any> {
+		return this.http.get(url)
+					.map(this.extractData)
+					.catch(this.handleError);
+	}
+	
 	post(url: string, body: any): Observable<any> {
 		const jsonBody = JSON.stringify(body);
 		const headers = new Headers({ 'Content-Type': 'application/json' });
@@ -15,6 +21,14 @@ export class RequestService {
 						return res.json().data;
 					})
 					.catch(this.handleError);
+	}
+	
+	private extractData(res: Response) {
+		if (res.status < 200 || res.status >= 300) {
+		throw new Error('Bad response status: ' + res.status);
+		}
+		let body = res.json();
+		return body.data || { };
 	}
 	
 	private handleError (error: any) {
