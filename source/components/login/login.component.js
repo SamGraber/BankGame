@@ -37,7 +37,7 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', '../../s
                     var _this = this;
                     this.authenticationService.login(this.model).subscribe(function () {
                         _this.router.navigate(['Account']);
-                    }, function (err) { return console.error(err); });
+                    });
                 };
                 LoginComponent = __decorate([
                     core_1.Component({
