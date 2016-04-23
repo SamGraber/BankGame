@@ -4,6 +4,7 @@ import { RequestService } from '../request/request.service';
 
 export interface IUser {
 	username: string;
+	accountId: number;
 }
 
 export interface ICredentials {
