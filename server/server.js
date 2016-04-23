@@ -57,7 +57,7 @@ if (app.get('env') === 'development') {
         res.status(err.status || 500);
 		console.log(err.message);
 		console.log(err);
-        res.render('../source/views/error.html');
+        res.render('error.html');
     });
 }
 
@@ -66,7 +66,7 @@ if (app.get('env') === 'development') {
 app.use(function(err, req, res, next) {
     res.status(err.status || 500);
 	console.log(err.message);
-    res.render('../source/views/error.html');
+    res.render('error.html');
 });
 
 
