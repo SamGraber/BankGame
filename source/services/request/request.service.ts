@@ -18,7 +18,7 @@ export class RequestService {
 		const options = new RequestOptions({ headers: headers });
 		return this.http.post(url, jsonBody, options)
 					.map(res =>  {
-						return res.json().data;
+						return res.json();
 					})
 					.catch(this.handleError);
 	}
