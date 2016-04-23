@@ -19,6 +19,7 @@ router.post('/login', function(req, res) {
 		if (user) {
 			if (user.password === req.body.password) {
 				res.json(user);
+				return;
 			}
 			res.status(500).send('Incorrect password');
 			return;
