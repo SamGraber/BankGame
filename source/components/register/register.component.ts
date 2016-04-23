@@ -16,6 +16,6 @@ export class RegisterComponent {
 	onSubmit(): void {
 		this.authenticationService.register(this.model).subscribe(() => {
 			this.router.navigate(['Account']);
-		}, err => console.error(err));
+		});
 	}
 }
