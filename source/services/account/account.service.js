@@ -25,16 +25,17 @@ System.register(['angular2/core', '../request/request.service'], function(export
                 function AccountService(http) {
                     this.http = http;
                 }
-                AccountService.prototype.getAccount = function (user) {
-                    var stream;
+                AccountService.prototype.getAccount = function (accountId) {
+                    return this.http.get('/api/account/' + accountId);
+                };
+                AccountService.prototype.getAccountForUser = function (user) {
                     if (user.accountId == null) {
-                        stream = this.http.post('/api/account/new', user);
+                        return this.http.post('/api/account/new', user);
                     }
-                    stream = this.http.get('/api/account/' + user.accountId);
-                    return stream.map(function (account) {
-                        account.user = user;
-                        return account;
-                    });
+                    return this.getAccount(user.accountId);
+                };
+                AccountService.prototype.updateAccount = function (account) {
+                    return this.http.put('api/account/' + account._id, account);
                 };
                 AccountService = __decorate([
                     core_1.Injectable(), 
