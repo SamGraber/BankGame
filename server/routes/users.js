@@ -15,7 +15,7 @@ router.get('/', function(req, res) {
 router.post('/login', function(req, res) {
 	var db = req.db;
 	var users = db.get('users');
-	users.find({ 'username': req.body.username }, {}, function(e, docs) {
+	users.findOne({ 'username': req.body.username }, {}, function(e, docs) {
 		console.log(docs);
 		res.json(docs);
 	});
