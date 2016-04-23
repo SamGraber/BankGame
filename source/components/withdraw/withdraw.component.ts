@@ -7,6 +7,7 @@ import { AccountService, IAccount } from '../../services/account/account.service
 })
 export class WithdrawComponent {
 	account: IAccount;
+	amount: number;
 	
 	constructor(private accountService: AccountService
 			, private routeParams: RouteParams) {}
@@ -14,5 +15,9 @@ export class WithdrawComponent {
 	ngOnInit(): void {
 		this.accountService.getAccount(this.routeParams.get('accountId'))
 			.subscribe((account: IAccount): IAccount => this.account = account);
+	}
+	
+	withdraw(): void {
+		console.log(this.amount);
 	}
 }
