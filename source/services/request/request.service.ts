@@ -1,3 +1,4 @@
+import * as toastr from 'toastr';
 import { Injectable } from 'angular2/core';
 import { Http, Response, Headers, RequestOptions } from 'angular2/http';
 import { Observable } from 'rxjs/Observable';
@@ -46,6 +47,12 @@ export class RequestService {
 		// In a real world app, we might send the error to remote logging infrastructure
 		let errMsg = error._body || 'Server error';
 		console.error(errMsg); // log to console instead
+		
+		if (error.status >= 500) {
+			toastr.error('An error has occured. Please contact support for further assistance');
+		} else {
+			toastr.warning(errMsg);
+		}
 		return Observable.throw(errMsg);
 	}
 }

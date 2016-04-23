@@ -21,6 +21,7 @@
     "es6-promise": "^3.1.2",
     "es6-shim": "^0.35.0",
     "express": "^4.13.4",
+    "jquery": "^2.2.3",
     "lodash": "^4.11.1",
     "mongodb": "^1.4.4",
     "monk": "^1.0.1",
@@ -29,6 +30,7 @@
     "rxjs": "^5.0.0-beta.3",
     "serve-favicon": "^2.3.0",
     "systemjs": "0.19.25",
+    "toastr": "^2.1.2",
     "zone.js": "^0.6.6"
   },
   "devDependencies": {
