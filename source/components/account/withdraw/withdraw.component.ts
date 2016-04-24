@@ -26,4 +26,8 @@ export class WithdrawComponent {
 			this.router.navigate(['Detail']);
 		});
 	}
+
+	cancel(): void {
+		this.router.navigate(['Detail']);
+	}
 }
