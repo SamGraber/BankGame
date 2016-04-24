@@ -9,6 +9,7 @@
     "build.watch": "tsc -w",
     "build-server": "cd ./server && tsc",
     "build-server.watch": "cd ./server && tsc -w",
+    "build-all": "npm run build && npm run build-server",
     "build-all.watch": "concurrently \"npm run build.watch\" \"npm run build-server.watch\"",
     "database": "mongod --dbpath ./data",
     "lite": "lite-server",
