@@ -28,7 +28,9 @@ accountRouter.put('/:id', (request, response): void => {
 	accountCollection.update({ '_id': request.params.id }
 	, { '$set': {'balance': request.body.balance}}
 	, (error, account): void => {
-		response.json(account);
+		accountCollection.findOne({ '_id': request.params.id }, {}, (error, updatedAccount): void => {
+			response.json(updatedAccount);
+		});
 	});
 })
 
