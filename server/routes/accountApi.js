@@ -24,7 +24,9 @@ accountRouter.get('/:id', function (request, response) {
 });
 accountRouter.put('/:id', function (request, response) {
     accountCollection.update({ '_id': request.params.id }, { '$set': { 'balance': request.body.balance } }, function (error, account) {
-        response.json(account);
+        accountCollection.findOne({ '_id': request.params.id }, {}, function (error, updatedAccount) {
+            response.json(updatedAccount);
+        });
     });
 });
 accountRouter.post('/new', function (request, response) {

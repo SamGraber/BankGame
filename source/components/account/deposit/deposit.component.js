@@ -1,4 +1,4 @@
-System.register(['lodash', 'angular2/core', 'angular2/router', '../../services/account/account.service'], function(exports_1, context_1) {
+System.register(['lodash', 'angular2/core', 'angular2/router', '../../../services/account/account.service'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -11,7 +11,7 @@ System.register(['lodash', 'angular2/core', 'angular2/router', '../../services/a
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var _, core_1, router_1, account_service_1;
-    var WithdrawComponent;
+    var DepositComponent;
     return {
         setters:[
             function (_1) {
@@ -27,35 +27,38 @@ System.register(['lodash', 'angular2/core', 'angular2/router', '../../services/a
                 account_service_1 = account_service_1_1;
             }],
         execute: function() {
-            WithdrawComponent = (function () {
-                function WithdrawComponent(accountService, routeParams, router) {
+            DepositComponent = (function () {
+                function DepositComponent(accountService, routeParams, router) {
                     this.accountService = accountService;
                     this.routeParams = routeParams;
                     this.router = router;
                 }
-                WithdrawComponent.prototype.ngOnInit = function () {
+                DepositComponent.prototype.ngOnInit = function () {
                     var _this = this;
                     this.accountService.getAccount(this.routeParams.get('accountId'))
                         .subscribe(function (account) { return _this.account = account; });
                 };
-                WithdrawComponent.prototype.withdraw = function () {
+                DepositComponent.prototype.deposit = function () {
                     var _this = this;
                     var updatedAccount = _.clone(this.account);
-                    updatedAccount.balance -= this.amount;
+                    updatedAccount.balance += this.amount;
                     this.accountService.updateAccount(updatedAccount).subscribe(function () {
-                        _this.router.navigate(['Account']);
+                        _this.router.navigate(['Detail']);
                     });
                 };
-                WithdrawComponent = __decorate([
+                DepositComponent.prototype.cancel = function () {
+                    this.router.navigate(['Detail']);
+                };
+                DepositComponent = __decorate([
                     core_1.Component({
-                        templateUrl: 'source/components/withdraw/withdraw.component.html',
+                        templateUrl: 'source/components/account/deposit/deposit.component.html',
                     }), 
                     __metadata('design:paramtypes', [account_service_1.AccountService, router_1.RouteParams, router_1.Router])
-                ], WithdrawComponent);
-                return WithdrawComponent;
+                ], DepositComponent);
+                return DepositComponent;
             }());
-            exports_1("WithdrawComponent", WithdrawComponent);
+            exports_1("DepositComponent", DepositComponent);
         }
     }
 });
-//# sourceMappingURL=withdraw.component.js.map
+//# sourceMappingURL=deposit.component.js.map
