@@ -4,7 +4,8 @@
   "scripts": {
     "typings": "typings install && cd ./server && typings install",
     "postinstall": "npm run typings",
-    "build": "tsc",
+    "clean": "gulp clean.app && gulp clean.server",
+    "build": "npm run clean && tsc",
     "build.watch": "tsc -w",
     "build-server": "cd ./server && tsc",
     "build-server.watch": "cd ./server && tsc -w",
@@ -38,6 +39,8 @@
   },
   "devDependencies": {
     "concurrently": "^2.0.0",
+    "del": "^2.2.0",
+    "gulp": "^3.9.1",
     "lite-server": "^2.1.0",
     "typescript": "^1.6.2",
     "typings": "^0.7.9"
