@@ -1,30 +1,29 @@
 import { Component } from 'angular2/core';
-import { COMMON_DIRECTIVES } from 'angular2/common';
-import { Router } from 'angular2/router';
+import { RouteConfig, ROUTER_DIRECTIVES } from 'angular2/router';
+
 import { AccountService, IAccount } from '../../services/account/account.service';
 import { AuthenticationService } from '../../services/authentication/authentication.service';
+import { AccountDetailComponent } from './accountDetail/accountDetail.component';
+import { WithdrawComponent } from './withdraw/withdraw.component';
+import { DepositComponent } from './deposit/deposit.component';
 
 @Component({
     templateUrl: 'source/components/account/account.component.html',
-	directives: [COMMON_DIRECTIVES],
+	directives: [ROUTER_DIRECTIVES],
 })
+@RouteConfig([
+	{ path: '/', 				    name: 'Detail', component: AccountDetailComponent, useAsDefault: true },
+	{ path: '/withdraw/:accountId', name: 'Withdraw', component: WithdrawComponent },
+	{ path: '/deposit/:accountId',  name: 'Deposit',  component: DepositComponent },
+])
 export class AccountComponent {
 	account: IAccount;
-	
+
 	constructor(private accountService: AccountService
-			, public authentication: AuthenticationService
-			, private router: Router) {}
-	
+			, public authentication: AuthenticationService) {}
+
 	ngOnInit(): void {
 		this.accountService.getAccountForUser(this.authentication.loggedInUser)
 			.subscribe((account: IAccount): IAccount => this.account = account);
-	}
-	
-	startWithdrawal(): void {
-		this.router.navigate(['Withdraw', { accountId: this.account._id }]);
-	}
-	
-	startDeposit(): void {
-		this.router.navigate(['Deposit', { accountId: this.account._id }]);
 	}
 }

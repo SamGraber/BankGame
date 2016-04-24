@@ -1,0 +1,8 @@
+Select the amount you would like to deposit:
+<form (ngSubmit)="deposit()">
+	<div class="form-group">
+		<input type="number" class="form-control" [(ngModel)]="amount"
+			   ngControl="amount" min="0" required />
+	</div>
+	<button class="btn btn-default" type="submit">Deposit</button>
+</form>
