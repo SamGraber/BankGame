@@ -2,17 +2,18 @@
   "name": "bank-game",
   "version": "1.0.0",
   "scripts": {
-    "start": "concurrently \"npm run database\" \"npm run build.watch\" \"npm run server\" ",
+    "typings": "typings install && cd ./server && typings install",
+    "postinstall": "npm run typings",
     "build": "tsc",
     "build.watch": "tsc -w",
     "build-server": "cd ./server && tsc",
     "build-server.watch": "cd ./server && tsc -w",
+    "build-all.watch": "concurrently \"npm run build.watch\" \"npm run build-server.watch\"",
     "database": "mongod --dbpath ./data",
     "lite": "lite-server",
     "http": "http-server",
     "server": "node ./server/run.js",
-    "typings": "typings install && cd ./server && typings install",
-    "postinstall": "npm run typings"
+    "start": "concurrently \"npm run database\" \"npm run build-all.watch\" \"npm run server\" "
   },
   "license": "ISC",
   "dependencies": {
