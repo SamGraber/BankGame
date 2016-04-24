@@ -1,43 +1,40 @@
-interface IHttpError extends Error {
-    status: number;
-}
+import * as express from 'express';
+import * as path from 'path';
+import * as favicon from 'serve-favicon';
+import * as logger from 'morgan';
+import * as cookieParser from 'cookie-parser';
+import * as bodyParser from 'body-parser';
+import * as htmlRenderer from 'ejs';
 
-const __express = require('express');
-const path = require('path');
-const favicon = require('serve-favicon');
-const logger = require('morgan');
-const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
-const htmlRenderer = require('ejs');
+import { userRouter } from './routes/userApi';
+import { accountRouter } from './routes/accountApi';
+import { router } from './routes/serveApp';
+import { IHttpError } from './httpError';
 
-const users = require('./routes/userApi');
-const accounts = require('./routes/accountApi');
-// routes needs to be last since we * all empty routes to the index file
-const routes = require('./routes/serveApp');
-
-const application = __express();
+const app = express();
 
 // view engine setup
-application.set('views', __dirname + '/views');
-application.engine('html', htmlRenderer.renderFile);
-application.set('view engine', 'html');
+app.set('views', __dirname + '/views');
+app.engine('html', htmlRenderer.renderFile);
+app.set('view engine', 'html');
 
-application.use(favicon(__dirname.replace('server', '') + '/assets/favicon.ico'));
-application.use(logger('dev'));
-application.use(bodyParser.json());
-application.use(bodyParser.urlencoded({ extended: false }));
-application.use(cookieParser());
-application.use('/node_modules', __express.static('node_modules'));
-application.use('/config.js', __express.static('config.js'));
-application.use('/assets', __express.static('assets'));
-application.use('/source', __express.static('source'));
+app.use(favicon(__dirname.replace('server', '') + '/assets/favicon.ico'));
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use('/node_modules', express.static('node_modules'));
+app.use('/config.js', express.static('config.js'));
+app.use('/assets', express.static('assets'));
+app.use('/source', express.static('source'));
 
-application.use('/api/users', users);
-application.use('/api/account', accounts);
-application.use('/', routes);
+app.use('/api/users', userRouter);
+app.use('/api/account', accountRouter);
+// routes needs to be last since we * all empty routes to the index file
+app.use('/', router);
 
 /// catch 404 and forwarding to error handler
-application.use((req, res, next: Function): void => {
+app.use((req, res, next: Function): void => {
     const error: IHttpError = <IHttpError>new Error('Not Found');
     error.status = 404;
     next(error);
@@ -47,8 +44,8 @@ application.use((req, res, next: Function): void => {
 
 // development error handler
 // will print stacktrace
-if (application.get('env') === 'development') {
-    application.use((error: IHttpError, req, response, next): void => {
+if (app.get('env') === 'development') {
+    app.use((error: IHttpError, req, response, next): void => {
         response.status(error.status || 500);
 		console.log(error.message);
 		console.log(error);
@@ -58,10 +55,10 @@ if (application.get('env') === 'development') {
 
 // production error handler
 // no stacktraces leaked to user
-application.use((error: IHttpError, req, response, next): void => {
+app.use((error: IHttpError, req, response, next): void => {
     response.status(error.status || 500);
 	console.log(error.message);
     response.render('error.html');
 });
 
-module.exports = application;
+export { app };

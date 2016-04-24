@@ -1,9 +1,9 @@
-const __expressImport = require('express');
-const router = __expressImport.Router();
+import * as express from 'express';
+const router = express.Router();
 
 /* GET home page. */
 router.get('/*', (req, response): void => {
   response.render('../../index.html');
 });
 
-module.exports = router;
+export { router };

@@ -1,8 +1,9 @@
-const expressInstance = require('express');
-const accountRouter = expressInstance.Router();
-const db = require('../database');
-const accountCollection = db.get('accounts');
-const usersCollection = db.get('users');
+import * as express from 'express';
+import { database } from '../database';
+
+const accountRouter = express.Router();
+const accountCollection = database.get('accounts');
+const usersCollection = database.get('users');
 
 /*
  * GET accounts.
@@ -43,4 +44,4 @@ accountRouter.post('/new', (request, response): void => {
 	});
 });
 
-module.exports = accountRouter;
+export { accountRouter };

@@ -1,7 +1,9 @@
-const _ = require('lodash');
-const express = require('express');
+import * as _ from 'lodash';
+import * as express from 'express';
+import { database } from '../database';
+
 const userRouter = express.Router();
-const userCollection = require('../database').get('users'); 
+const userCollection = database.get('users'); 
 
 /*
  * GET users.
@@ -38,4 +40,4 @@ userRouter.post('/register', (request, response): void => {
 	});
 });
 
-module.exports = userRouter;
+export { userRouter };

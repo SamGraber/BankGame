@@ -1,6 +1,5 @@
-// Database
-const mongo = require('mongodb');
-const monk = require('monk');
+import * as mongo from 'mongodb';
+import * as monk from 'monk';
 const database = monk('localhost:27017/bankgame');
 
-module.exports = database
+export { database };

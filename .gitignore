@@ -2,3 +2,9 @@
 /node_modules/
 /typings/
 /data/
+
+/* Server typings */
+/server/typings/main
+/server/typings/main.d.ts
+/server/typings/browser
+/server/typings/browser.d.ts

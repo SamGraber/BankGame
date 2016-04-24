@@ -4,9 +4,11 @@
  * Module dependencies.
  */
 
-const app = require('./server');
-const debug = require('debug')('bankgame:server');
-const http = require('http');
+import { app } from './server';
+import * as debugFunc from 'debug';
+import * as http from 'http';
+
+const debug = debugFunc('bankgame:server');
 
 /**
  * Get port from environment and store in Express.
