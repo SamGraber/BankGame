@@ -19,9 +19,11 @@ System.config({
   },
   map: {
     "angular2": "node_modules/angular2",
-    "rxjs": "node_modules/rxjs",
-    "lodash": "node_modules/lodash",
-    "toastr": "node_modules/toastr",
     "jquery": "node_modules/jquery",
+    "lodash": "node_modules/lodash",
+    "rxjs": "node_modules/rxjs",
+    "systemjs": "node_modules/systemjs/dist/system.js",
+    "toastr": "node_modules/toastr",
+    "typescript": "node_modules/typescript/lib/typescript.js",
   }
 });
