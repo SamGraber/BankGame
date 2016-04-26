@@ -19,6 +19,7 @@ System.config({
   },
   map: {
     "angular2": "node_modules/angular2",
+    "es6-shim": "node_modules/es6-shim/es6-shim.js",
     "jquery": "node_modules/jquery",
     "lodash": "node_modules/lodash",
     "rxjs": "node_modules/rxjs",
