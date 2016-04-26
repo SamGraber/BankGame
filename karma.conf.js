@@ -17,6 +17,7 @@ module.exports = function(config) {
 				'source/*.js',
 				'source/**/*.js',
 				'server/**/*.js',
+				'node_modules/**/*.js',
 			],
 
 			// Add any additional configuration, such as mappings to modules only used in testing
