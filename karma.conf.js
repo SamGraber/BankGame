@@ -28,7 +28,7 @@ module.exports = function(config) {
 
 		autoWatch: true,
 
-		frameworks: ['systemjs', 'mocha', 'chai'],
+		frameworks: ['systemjs', 'mocha', 'chai', 'sinon'],
 
 		browsers: ['Chrome'],
 
@@ -38,6 +38,7 @@ module.exports = function(config) {
 			'karma-firefox-launcher',
 			'karma-mocha',
 			'karma-chai',
+			'karma-sinon',
 		],
 
 	});
