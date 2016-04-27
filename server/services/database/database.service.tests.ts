@@ -37,14 +37,14 @@ describe('database service', (): void => {
 		sinon.assert.calledWith(database.findOne, { prop2: 2 })
 	});
 
-	it('should get a list of items', (done: MochaDone): void => {
+	it('should get a list of items with a search param', (done: MochaDone): void => {
 		const modelList: ITestModel[] = <any>[
 			{ prop1: 'value 1' },
 			{ prop1: 'value 2' },
 		];
 		database.list = modelList;
 
-		databaseService.getList().then((results: ITestModel[]): void => {
+		databaseService.getList({ prop1: 'value 1'}).then((results: ITestModel[]): void => {
 			expect(results).to.have.length(2);
 			expect(results[0]).to.deep.equal(modelList[0]);
 			expect(results[1]).to.deep.equal(modelList[1]);
@@ -54,6 +54,7 @@ describe('database service', (): void => {
 		database.flush();
 
 		sinon.assert.calledOnce(database.find);
+		sinon.assert.calledWith(database.find, { prop1: 'value 1' });
 	});
 
 	it('should update all properties of the model', (done: MochaDone): void => {
