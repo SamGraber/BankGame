@@ -1,8 +1,8 @@
 declare module "mongodb" {
-	let module = any;
-	return module;
+	let module: any;
+	export = module;
 }
 declare module "monk" {
-	let module = any;
-	return module;
+	let module: any;
+	export = module;
 }
