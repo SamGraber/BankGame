@@ -39,6 +39,14 @@ export class DatabaseService<TDataType> {
 		});
 	}
 
+	create(model: TDataType): Promise<TDataType> {
+		return new Promise((resolve: Function, reject: Function): void => {
+			this.database.update(model, (error, newModel): void => {
+				resolve(newModel);
+			});
+		});
+	}
+
 	private buildQuery(schema: ISchema, id: any): any {
 		const query: any = {};
 		query[schema.identifier] = id;

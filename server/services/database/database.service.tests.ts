@@ -77,4 +77,21 @@ describe('database service', (): void => {
 		expect(arg.$set.prop1).to.equal('something');
 		expect(arg.$set.prop2).to.equal(4);
 	});
+
+	it('should create a new model', (done: MochaDone): void => {
+		const model: ITestModel = {
+			prop1: 'something new',
+			prop2: 5,
+		};
+
+		databaseService.create(model).then((result: ITestModel): void => {
+			expect(result).to.deep.equal(model);
+			done();
+		});
+
+		database.flush();
+
+		sinon.assert.calledOnce(database.insert);
+		sinon.assert.calledWith(database.insert, model);
+	});
 });
