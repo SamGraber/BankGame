@@ -1,28 +1,17 @@
 import { DatabaseService, IModel } from './database.service';
+import { MockDatabase } from './database.mock';
 
 interface ITestModel extends IModel {
 	prop1?: string;
 	prop2?: number;
 }
 
-interface IMockDatabase {
-	resolve(): void;
-	callback: Function;
-	update: Sinon.SinonSpy;
-	findOne: Sinon.SinonSpy;
-}
-
 describe('database service', (): void => {
-	let database: IMockDatabase;
+	let database: MockDatabase;
 	let databaseService: DatabaseService;
 
 	beforeEach((): void => {
-		database = {
-			resolve(): void { database.callback(); },
-			callback: null,
-			update: sinon.spy((query: any, model: any, callback: Function): void => { database.callback = callback; }),
-			findOne: sinon.spy(),
-		};
+		database = new MockDatabase();
 		databaseService = new DatabaseService(database);
 	});
 
@@ -32,18 +21,19 @@ describe('database service', (): void => {
 			prop1: 'something',
 			prop2: 4,
 		};
+		database.currentModel = model;
 
 		databaseService.update(model).then((result: ITestModel): void => {
-			// expect(result).to.deep.equal(model);
-			// done();
+			expect(result).to.deep.equal(model);
+			done();
 		});
 
-		database.resolve();
+		database.flush();
+		database.flush();
 
 		sinon.assert.calledOnce(database.update);
 		const arg: any = database.update.firstCall.args[1];
 		expect(arg.$set.prop1).to.equal('something');
 		expect(arg.$set.prop2).to.equal(4);
-		done();
 	});
 });
