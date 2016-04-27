@@ -2,11 +2,20 @@ import * as _ from 'lodash';
 import { Promise } from 'es6-shim';
 
 export interface IModel {
+	identifier: string;
 	properties: string[];
 }
 
 export class DatabaseService {
 	constructor(public database: any) { }
+
+	getList(): Promise<IModel> {
+		return null;
+	}
+
+	getDetail(id: any): Promise<IModel> {
+		return null;
+	}
 
 	update(model: IModel): Promise<IModel> {
 		return new Promise((resolve: Function, reject: Function): void => {
