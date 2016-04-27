@@ -11,7 +11,7 @@ import { accountRouter } from './routes/accountApi';
 import { router } from './routes/serveApp';
 import { IHttpError } from './httpError';
 
-const app = express();
+const app: express.Express = express();
 
 // view engine setup
 app.set('views', __dirname + '/views');
@@ -34,7 +34,7 @@ app.use('/api/account', accountRouter);
 app.use('/', router);
 
 /// catch 404 and forwarding to error handler
-app.use((req, res, next: Function): void => {
+app.use((request: express.Request, response: express.Response, next: express.NextFunction): void => {
     const error: IHttpError = <IHttpError>new Error('Not Found');
     error.status = 404;
     next(error);
@@ -45,7 +45,7 @@ app.use((req, res, next: Function): void => {
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
-    app.use((error: IHttpError, req, response, next): void => {
+    app.use((error: IHttpError, request: express.Request, response: express.Response): void => {
         response.status(error.status || 500);
 		console.log(error.message);
 		console.log(error);
@@ -55,7 +55,7 @@ if (app.get('env') === 'development') {
 
 // production error handler
 // no stacktraces leaked to user
-app.use((error: IHttpError, req, response, next): void => {
+app.use((error: IHttpError, request: express.Request, response: express.Response): void => {
     response.status(error.status || 500);
 	console.log(error.message);
     response.render('error.html');

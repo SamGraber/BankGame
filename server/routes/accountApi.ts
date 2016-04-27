@@ -8,13 +8,13 @@ const usersCollection = database.get('users');
 /*
  * GET accounts.
  */
-accountRouter.get('/', (request, response): void => {
+accountRouter.get('/', (request: express.Request, response: express.Response): void => {
     accountCollection.find({} ,{}, (error, accounts): void => {
         response.json(accounts);
     });
 });
 
-accountRouter.get('/:id', (request, response): void => {
+accountRouter.get('/:id', (request: express.Request, response: express.Response): void => {
     accountCollection.findOne({ '_id': request.params.id }, {}, (error, account): void => {
         if (account) {
 			response.json(account);
@@ -24,7 +24,7 @@ accountRouter.get('/:id', (request, response): void => {
     });
 });
 
-accountRouter.put('/:id', (request, response): void => {
+accountRouter.put('/:id', (request: express.Request, response: express.Response): void => {
 	accountCollection.update({ '_id': request.params.id }
 	, { '$set': {'balance': request.body.balance}}
 	, (error, account): void => {
@@ -34,7 +34,7 @@ accountRouter.put('/:id', (request, response): void => {
 	});
 })
 
-accountRouter.post('/new', (request, response): void => {
+accountRouter.post('/new', (request: express.Request, response: express.Response): void => {
 	usersCollection.findOne({ 'username': request.body.username }, {}, (error, user): void => {
 		if (user) {
 			accountCollection.insert({ 'balance': 0 }, (error, account): void => {
