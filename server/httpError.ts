@@ -1,3 +1,3 @@
-interface IHttpError extends Error {
+export interface IHttpError extends Error {
 	status: number;
 }
