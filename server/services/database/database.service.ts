@@ -18,8 +18,13 @@ export class DatabaseService<TDataType> {
 		});
 	}
 
-	getDetail(id: any): Promise<IModel> {
-		return null;
+	getDetail(id: any): Promise<TDataType> {
+		return new Promise((resolve: Function, reject: Function): void => {
+			const query: any = this.buildQuery(this.schema, id);
+			this.database.findOne(query, {}, (error: any, data: TDataType): void => {
+				resolve(data);
+			});
+		});
 	}
 
 	update(model: TDataType): Promise<TDataType> {
