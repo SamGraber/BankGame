@@ -28,7 +28,7 @@ app.use('/api/account', accountApi_1.accountRouter);
 // routes needs to be last since we * all empty routes to the index file
 app.use('/', serveApp_1.router);
 /// catch 404 and forwarding to error handler
-app.use(function (req, res, next) {
+app.use(function (request, response, next) {
     var error = new Error('Not Found');
     error.status = 404;
     next(error);
@@ -37,7 +37,7 @@ app.use(function (req, res, next) {
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
-    app.use(function (error, req, response, next) {
+    app.use(function (error, request, response) {
         response.status(error.status || 500);
         console.log(error.message);
         console.log(error);
@@ -46,7 +46,7 @@ if (app.get('env') === 'development') {
 }
 // production error handler
 // no stacktraces leaked to user
-app.use(function (error, req, response, next) {
+app.use(function (error, request, response) {
     response.status(error.status || 500);
     console.log(error.message);
     response.render('error.html');
