@@ -1,24 +1,27 @@
-import { DatabaseService, IModel } from './database.service';
+import { DatabaseService, ISchema } from './database.service';
 import { MockDatabase } from './database.mock';
 
-interface ITestModel extends IModel {
+interface ITestModel {
 	prop1?: string;
 	prop2?: number;
 }
 
 describe('database service', (): void => {
+	let model: ISchema;
 	let database: MockDatabase;
-	let databaseService: DatabaseService;
+	let databaseService: DatabaseService<ITestModel>;
 
 	beforeEach((): void => {
+		model = {
+			identifier: 'prop2',
+			properties: ['prop1', 'prop2'],
+		};
 		database = new MockDatabase();
-		databaseService = new DatabaseService(database);
+		databaseService = new DatabaseService(database, model);
 	});
 
 	it('should get an item by its identifier', (done: MochaDone): void => {
 		const model: ITestModel = {
-			identifier: 'prop2',
-			properties: [],
 			prop2: 2,
 		};
 		database.currentModel = model;
@@ -56,8 +59,6 @@ describe('database service', (): void => {
 
 	it('should update all properties of the model', (done: MochaDone): void => {
 		const model: ITestModel = {
-			identifier: '1',
-			properties: ['prop1', 'prop2'],
 			prop1: 'something',
 			prop2: 4,
 		};

@@ -1,17 +1,18 @@
 import * as _ from 'lodash';
 import { Promise } from 'es6-shim';
 
-export interface IModel {
+export interface ISchema {
 	identifier: string;
 	properties: string[];
 }
 
-export class DatabaseService {
-	constructor(public database: any) { }
+export class DatabaseService<TDataType> {
+	constructor(public database: any
+			, public schema: ISchema) { }
 
-	getList(): Promise<IModel[]> {
+	getList(): Promise<TDataType[]> {
 		return new Promise((resolve: Function, reject: Function): void => {
-			this.database.find({}, {}, (error: any, data: IModel[]): void => {
+			this.database.find({}, {}, (error: any, data: TDataType[]): void => {
 				resolve(data);
 			});
 		});
@@ -21,19 +22,27 @@ export class DatabaseService {
 		return null;
 	}
 
-	update(model: IModel): Promise<IModel> {
+	update(model: TDataType): Promise<TDataType> {
 		return new Promise((resolve: Function, reject: Function): void => {
-			this.database.update({ '_id': '1' }, this.buildUpdateModel(model), (updateError): void => {
-				this.database.findOne({ '_id': '1' }, {}, (findError, updatedModel): void => {
+			const id: any = model[this.schema.identifier];
+			const query: any = this.buildQuery(this.schema, id);
+			this.database.update(query, this.buildUpdateModel(this.schema, model), (updateError): void => {
+				this.database.findOne(query, {}, (findError, updatedModel): void => {
 					resolve(updatedModel);
 				});
 			});
 		});
 	}
 
-	private buildUpdateModel(model: IModel): any {
+	private buildQuery(schema: ISchema, id: any): any {
+		const query: any = {};
+		query[schema.identifier] = id;
+		return query;
+	}
+
+	private buildUpdateModel(schema: ISchema, model: any): any {
 		const updateModel: any = { $set: {} };
-		_.each(model.properties, (prop: string): any => {
+		_.each(schema.properties, (prop: string): any => {
 			updateModel.$set[prop] = model[prop];
 		});
 		return updateModel;
