@@ -34,8 +34,7 @@ describe('database service', (): void => {
 		database.flush();
 
 		sinon.assert.calledOnce(database.findOne);
-		const arg: any = database.update.firstCall.args[1];
-		expect(arg.prop2).to.equal(2);
+		sinon.assert.calledWith(database.findOne, { prop2: 2 })
 	});
 
 	it('should get a list of items', (done: MochaDone): void => {
