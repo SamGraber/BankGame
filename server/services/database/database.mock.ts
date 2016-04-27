@@ -14,9 +14,9 @@ export class MockDatabase {
 	list: any[];
 
 	constructor() {
-		this.findOne = sinon.spy(this.findOneFunc);
-		this.find = sinon.spy(this.findFunc);
-		this.update = sinon.spy(this.updateFunc);
+		this.findOne = <IMockAsync>sinon.spy(this.findOneFunc);
+		this.find = <IMockAsync>sinon.spy(this.findFunc);
+		this.update = <IMockAsync>sinon.spy(this.updateFunc);
 	}
 
 	flush(): void {
