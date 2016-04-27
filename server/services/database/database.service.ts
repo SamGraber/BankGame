@@ -9,8 +9,12 @@ export interface IModel {
 export class DatabaseService {
 	constructor(public database: any) { }
 
-	getList(): Promise<IModel> {
-		return null;
+	getList(): Promise<IModel[]> {
+		return new Promise((resolve: Function, reject: Function): void => {
+			this.database.find({}, {}, (error: any, data: IModel[]): void => {
+				resolve(data);
+			});
+		});
 	}
 
 	getDetail(id: any): Promise<IModel> {
