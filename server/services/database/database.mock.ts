@@ -1,4 +1,5 @@
 import * as _ from 'lodash';
+import * as Sinon from 'sinon';
 
 interface IMockAsync extends Sinon.SinonSpy {
 	callback(): void;
