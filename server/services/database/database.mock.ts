@@ -9,6 +9,7 @@ export class MockDatabase {
 	findOne: IMockAsync;
 	find: IMockAsync;
 	update: IMockAsync;
+	insert: IMockAsync;
 
 	currentModel: any;
 	list: any[];
@@ -17,6 +18,7 @@ export class MockDatabase {
 		this.findOne = <IMockAsync>sinon.spy(this.findOneFunc);
 		this.find = <IMockAsync>sinon.spy(this.findFunc);
 		this.update = <IMockAsync>sinon.spy(this.updateFunc);
+		this.insert = <IMockAsync>sinon.spy(this.insertFunc);
 	}
 
 	flush(): void {
@@ -38,5 +40,9 @@ export class MockDatabase {
 
 	private updateFunc(query: any, update: any, callback: { (): void }): void {
 		this.update.callback = callback;
+	}
+
+	private insertFunc(object: any, callback: { (error: any, results: any): void }): void {
+		this.update.callback = () => callback(null, object);
 	}
 }
