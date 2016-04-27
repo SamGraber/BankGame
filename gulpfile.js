@@ -18,5 +18,5 @@ gulp.task('clean.server', function (done) {
 			, dir + mapFiles
 			, dir + typingFiles
 			, '!' + dir + typingsFolder
-			, '!' + dir + typingsSubfolders], done); 
+			, '!' + dir + typingsSubfolders], done);
 });
