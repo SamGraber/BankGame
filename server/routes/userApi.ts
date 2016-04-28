@@ -31,7 +31,7 @@ userRouter.post('/login', (request: express.Request, response: express.Response)
 });
 
 userRouter.post('/register', (request: express.Request, response: express.Response): void => {
-	userDatabase.getList({ usename: request.body.username }).then((results: IUser[]): void => {
+	userDatabase.getList({ username: request.body.username }).then((results: IUser[]): void => {
 		if (_.some(results)) {
 			response.status(400).send('A user with that username already exists');
 			return;
