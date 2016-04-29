@@ -43,7 +43,7 @@ System.register(['angular2/core', 'angular2/router', '../../services/account/acc
                 }
                 AccountComponent.prototype.ngOnInit = function () {
                     var _this = this;
-                    this.accountService.getAccountForUser(this.authentication.loggedInUser)
+                    this.accountService.getAccountForUser(this.authentication.activeUser)
                         .subscribe(function (account) { return _this.account = account; });
                     this.accountService.accountChanges
                         .subscribe(function (updatedAccount) { return _this.account = updatedAccount; });

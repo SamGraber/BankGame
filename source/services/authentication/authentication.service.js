@@ -1,4 +1,4 @@
-System.register(['angular2/core', '../request/request.service'], function(exports_1, context_1) {
+System.register(['lodash', 'angular2/core', 'typescript-angular-utilities/source/services/array/array.service', '../request/request.service'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,32 +10,47 @@ System.register(['angular2/core', '../request/request.service'], function(export
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, request_service_1;
+    var __param = (this && this.__param) || function (paramIndex, decorator) {
+        return function (target, key) { decorator(target, key, paramIndex); }
+    };
+    var _, core_1, array_service_1, request_service_1;
     var AuthenticationService;
     return {
         setters:[
+            function (_1) {
+                _ = _1;
+            },
             function (core_1_1) {
                 core_1 = core_1_1;
+            },
+            function (array_service_1_1) {
+                array_service_1 = array_service_1_1;
             },
             function (request_service_1_1) {
                 request_service_1 = request_service_1_1;
             }],
         execute: function() {
             AuthenticationService = (function () {
-                function AuthenticationService(http) {
+                function AuthenticationService(http, array) {
                     var _this = this;
                     this.http = http;
+                    this.array = array;
                     this.isAuthenticated = false;
+                    this.loggedInUsers = [];
                     this.authenticate = function (user) {
-                        _this.loggedInUser = user;
+                        _this.activeUser = user;
+                        _this.loggedInUsers.push(user);
                         _this.isAuthenticated = true;
-                        localStorage.loggedInUser = JSON.stringify(user);
-                        return _this.loggedInUser;
+                        localStorage.loggedInUsers = JSON.stringify(_this.loggedInUsers);
+                        return _this.activeUser;
                     };
                 }
                 AuthenticationService.prototype.restoreSession = function () {
-                    if (localStorage.loggedInUser) {
-                        this.loggedInUser = JSON.parse(localStorage.loggedInUser);
+                    if (localStorage.loggedInUsers) {
+                        this.loggedInUsers = JSON.parse(localStorage.loggedInUsers);
+                        if (this.loggedInUsers.length === 1) {
+                            this.activeUser = this.loggedInUsers[0];
+                        }
                         this.isAuthenticated = true;
                         return true;
                     }
@@ -46,17 +61,24 @@ System.register(['angular2/core', '../request/request.service'], function(export
                         .map(this.authenticate);
                 };
                 AuthenticationService.prototype.logout = function () {
-                    localStorage.removeItem('loggedInUser');
-                    this.loggedInUser = null;
-                    this.isAuthenticated = false;
+                    this.array.remove(this.loggedInUsers, this.activeUser);
+                    this.activeUser = null;
+                    if (_.some(this.loggedInUsers)) {
+                        localStorage.loggedInUsers = JSON.stringify(this.loggedInUsers);
+                    }
+                    else {
+                        localStorage.removeItem('loggedInUser');
+                        this.isAuthenticated = false;
+                    }
                 };
                 AuthenticationService.prototype.register = function (credentials) {
                     return this.http.post('/api/users/register', credentials)
                         .map(this.authenticate);
                 };
                 AuthenticationService = __decorate([
-                    core_1.Injectable(), 
-                    __metadata('design:paramtypes', [request_service_1.RequestService])
+                    core_1.Injectable(),
+                    __param(1, core_1.Inject(array_service_1.arrayToken)), 
+                    __metadata('design:paramtypes', [request_service_1.RequestService, Object])
                 ], AuthenticationService);
                 return AuthenticationService;
             }());
