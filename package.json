@@ -39,6 +39,7 @@
     "sinon": "^1.17.3",
     "systemjs": "0.19.25",
     "toastr": "^2.1.2",
+    "typescript-angular-utilities": "^3.0.2",
     "zone.js": "^0.6.6"
   },
   "devDependencies": {

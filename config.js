@@ -26,5 +26,6 @@ System.config({
     "systemjs": "node_modules/systemjs/dist/system.js",
     "toastr": "node_modules/toastr",
     "typescript": "node_modules/typescript/lib/typescript.js",
+    "typescript-angular-utilities": "node_modules/typescript-angular-utilities",
   }
 });
