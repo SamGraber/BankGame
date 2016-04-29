@@ -1,0 +1,3 @@
+<div class="list-group">
+	<a class="list-group-item clickable" type="button" *ngFor="#user of authentication.loggedInUsers" (click)="switch(user)">{{user.username}}</a>
+</div>

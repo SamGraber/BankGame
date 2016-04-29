@@ -4,6 +4,7 @@ import { ARRAY_PROVIDER } from 'typescript-angular-utilities/source/services/arr
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { AccountComponent } from './components/account/account.component';
+import { SwitchUserComponent } from './components/switchUser/switchUser.component';
 import { AuthenticationService } from './services/authentication/authentication.service';
 import { RequestService } from './services/request/request.service';
 import { AccountService } from './services/account/account.service';
@@ -18,6 +19,7 @@ import { AccountService } from './services/account/account.service';
   { path:'/login',       name: 'Login',      component: LoginComponent },
   { path:'/register',    name: 'Register',   component: RegisterComponent },
   { path:'/account/...', name: 'Account',    component: AccountComponent },
+  { path:'/switchUser',  name: 'SwitchUser', component: SwitchUserComponent },
 ])
 export class AppComponent {
 	constructor(public authentication: AuthenticationService
@@ -25,7 +27,11 @@ export class AppComponent {
 
 	ngOnInit(): void {
 		if (this.authentication.restoreSession()) {
-			this.router.navigate(['Account']);
+			if (this.authentication.activeUser) {
+				this.router.navigate(['Account']);
+			} else {
+				this.router.navigate(['SwitchUser']);
+			}
 		} else {
 			this.router.navigate(['Login']);
 		}
@@ -35,6 +41,8 @@ export class AppComponent {
 		this.authentication.logout();
 		if (!this.authentication.isAuthenticated) {
 			this.router.navigate(['Login']);
+		} else {
+			this.router.navigate(['SwitchUser']);
 		}
 	}
 }

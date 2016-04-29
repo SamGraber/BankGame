@@ -4,5 +4,6 @@
 	<li role="presentation" *ngIf="authentication.isAuthenticated"><a role="button" (click)="logout()">Logout</a></li>
 	<li role="presentation"><a [routerLink]="['Login']">Login</a></li>
 	<li role="presentation"><a [routerLink]="['Register']">Register</a></li>
+	<li role="presentation"><a [routerLink]="['SwitchUser']">Switch User</a></li>
 </ul>
 <router-outlet></router-outlet>
