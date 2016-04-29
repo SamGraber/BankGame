@@ -1,7 +1,7 @@
 <h1>Bank Game</h1>
-<ul class="nav nav-tabs" *ngIf="authentication.isAuthenticated">
-	<li role="presentation" *ngIf="authentication.isAuthenticated"><a [routerLink]="['Account']">Account</a></li>
-	<li role="presentation" *ngIf="authentication.isAuthenticated"><a role="button" (click)="logout()">Logout</a></li>
+<ul class="nav nav-tabs">
+	<li role="presentation" *ngIf="authentication.activeUser != null"><a [routerLink]="['Account']">Account</a></li>
+	<li role="presentation" *ngIf="authentication.activeUser != null"><a role="button" (click)="logout()">Logout</a></li>
 	<li role="presentation"><a [routerLink]="['Login']">Login</a></li>
 	<li role="presentation"><a [routerLink]="['Register']">Register</a></li>
 	<li role="presentation"><a [routerLink]="['SwitchUser']">Switch User</a></li>
