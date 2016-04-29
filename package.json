@@ -16,7 +16,7 @@
     "lite": "lite-server",
     "http": "http-server",
     "server": "node ./server/run.js",
-    "start": "concurrently \"npm run database\" \"npm run build-all.watch\" \"npm run server\" "
+    "start": "npm run build-server && concurrently \"npm run database\" \"npm run build.watch\" \"npm run server\" "
   },
   "license": "ISC",
   "dependencies": {
