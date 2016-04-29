@@ -10,7 +10,7 @@ export class DatabaseService<TDataType> {
 	constructor(public database: any
 			, public schema: ISchema) { }
 
-	getList(searchModel?: any): Promise<TDataType[]> {
+	getList<TSearchModel>(searchModel?: TSearchModel): Promise<TDataType[]> {
 		return new Promise((resolve: Function, reject: Function): void => {
 			this.database.find(searchModel || {}, {}, (error: any, data: TDataType[]): void => {
 				resolve(data);
