@@ -37,27 +37,24 @@ export class AuthenticationService {
 	
 	login(credentials: ICredentials): Observable<IUser> {
 		return this.http.post('/api/users/login', credentials)
-					.map(user =>  {
-						this.loggedInUser = user;
-						console.log(user.username + ' is now logged in');
-						localStorage.loggedInUser = JSON.stringify(user);
-						this.isAuthenticated = true;
-						return this.loggedInUser;
-					});
+					.map(this.authenticate);
 	}
-	
+
 	logout(): void {
 		localStorage.removeItem('loggedInUser');
 		this.loggedInUser = null;
 		this.isAuthenticated = false;
 	}
-	
+
 	register(credentials: ICredentials): Observable<IUser> {
 		return this.http.post('/api/users/register', credentials)
-					.map(user =>  {
-						this.loggedInUser = user;
-						this.isAuthenticated = true;
-						return this.loggedInUser;
-					});
+					.map(this.authenticate);
+	}
+
+	private authenticate: { (user: IUser): IUser } = (user: IUser): IUser => {
+		this.loggedInUser = user;
+		this.isAuthenticated = true;
+		localStorage.loggedInUser = JSON.stringify(user);
+		return this.loggedInUser;
 	}
 }
