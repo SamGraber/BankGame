@@ -5,7 +5,7 @@ import { RequestService } from '../request/request.service';
 import { IUser } from '../authentication/authentication.service';
 
 export interface IAccount {
-	_id: number;
+	_id: string;
 	user: IUser;
 	balance: number;
 }
