@@ -1,21 +1,24 @@
 import * as express from 'express';
 import { database } from '../database';
+import { DatabaseService } from '../services/database/database.service';
+import { UserSchema, IUser } from '../schemas/user.schema';
+import { AccountSchema, IAccount } from '../schemas/account.schema';
 
 const accountRouter = express.Router();
-const accountCollection = database.get('accounts');
-const usersCollection = database.get('users');
+const accountDatabase = new DatabaseService(database.get('accounts'), AccountSchema);
+const userDatabase = new DatabaseService(database.get('users'), UserSchema);
 
 /*
  * GET accounts.
  */
 accountRouter.get('/', (request: express.Request, response: express.Response): void => {
-    accountCollection.find({} ,{}, (error, accounts): void => {
+    accountDatabase.getList().then((accounts: IAccount[]): void => {
         response.json(accounts);
     });
 });
 
 accountRouter.get('/:id', (request: express.Request, response: express.Response): void => {
-    accountCollection.findOne({ '_id': request.params.id }, {}, (error, account): void => {
+    accountDatabase.getDetail(request.params.id).then((account: IAccount): void => {
         if (account) {
 			response.json(account);
 			return;
@@ -25,20 +28,17 @@ accountRouter.get('/:id', (request: express.Request, response: express.Response)
 });
 
 accountRouter.put('/:id', (request: express.Request, response: express.Response): void => {
-	accountCollection.update({ '_id': request.params.id }
-	, { '$set': {'balance': request.body.balance}}
-	, (error, account): void => {
-		accountCollection.findOne({ '_id': request.params.id }, {}, (error, updatedAccount): void => {
-			response.json(updatedAccount);
-		});
+	accountDatabase.update(request.body).then((updatedAccount: IAccount): void => {
+		response.json(updatedAccount);
 	});
 })
 
 accountRouter.post('/new', (request: express.Request, response: express.Response): void => {
-	usersCollection.findOne({ 'username': request.body.username }, {}, (error, user): void => {
+	userDatabase.getDetail(request.body.username).then((user: IUser): void => {
 		if (user) {
-			accountCollection.insert({ 'balance': 0 }, (error, account): void => {
-				usersCollection.update({ 'username': request.body.username }, { '$set': { 'accountId': account._id }}, (error): void => {
+			accountDatabase.create({ 'balance': 0 }).then((account: IAccount): void => {
+				user.accountId = account._id;
+				userDatabase.update(user).then((): void => {
 					response.json(account);
 				});
 			});
