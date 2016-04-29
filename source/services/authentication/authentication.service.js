@@ -23,8 +23,15 @@ System.register(['angular2/core', '../request/request.service'], function(export
         execute: function() {
             AuthenticationService = (function () {
                 function AuthenticationService(http) {
+                    var _this = this;
                     this.http = http;
                     this.isAuthenticated = false;
+                    this.authenticate = function (user) {
+                        _this.loggedInUser = user;
+                        _this.isAuthenticated = true;
+                        localStorage.loggedInUser = JSON.stringify(user);
+                        return _this.loggedInUser;
+                    };
                 }
                 AuthenticationService.prototype.restoreSession = function () {
                     if (localStorage.loggedInUser) {
@@ -35,15 +42,8 @@ System.register(['angular2/core', '../request/request.service'], function(export
                     return false;
                 };
                 AuthenticationService.prototype.login = function (credentials) {
-                    var _this = this;
                     return this.http.post('/api/users/login', credentials)
-                        .map(function (user) {
-                        _this.loggedInUser = user;
-                        console.log(user.username + ' is now logged in');
-                        localStorage.loggedInUser = JSON.stringify(user);
-                        _this.isAuthenticated = true;
-                        return _this.loggedInUser;
-                    });
+                        .map(this.authenticate);
                 };
                 AuthenticationService.prototype.logout = function () {
                     localStorage.removeItem('loggedInUser');
@@ -51,13 +51,8 @@ System.register(['angular2/core', '../request/request.service'], function(export
                     this.isAuthenticated = false;
                 };
                 AuthenticationService.prototype.register = function (credentials) {
-                    var _this = this;
                     return this.http.post('/api/users/register', credentials)
-                        .map(function (user) {
-                        _this.loggedInUser = user;
-                        _this.isAuthenticated = true;
-                        return _this.loggedInUser;
-                    });
+                        .map(this.authenticate);
                 };
                 AuthenticationService = __decorate([
                     core_1.Injectable(), 

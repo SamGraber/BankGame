@@ -5,6 +5,7 @@ var MockDatabase = (function () {
         this.findOne = sinon.spy(this.findOneFunc);
         this.find = sinon.spy(this.findFunc);
         this.update = sinon.spy(this.updateFunc);
+        this.insert = sinon.spy(this.insertFunc);
     }
     MockDatabase.prototype.flush = function () {
         _.each(this, function (prop) {
@@ -24,6 +25,9 @@ var MockDatabase = (function () {
     };
     MockDatabase.prototype.updateFunc = function (query, update, callback) {
         this.update.callback = callback;
+    };
+    MockDatabase.prototype.insertFunc = function (object, callback) {
+        this.update.callback = function () { return callback(null, object); };
     };
     return MockDatabase;
 }());

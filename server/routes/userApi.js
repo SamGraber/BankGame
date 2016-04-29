@@ -2,19 +2,23 @@
 var _ = require('lodash');
 var express = require('express');
 var database_1 = require('../database');
+var database_service_1 = require('../services/database/database.service');
+var user_schema_1 = require('../schemas/user.schema');
+var account_schema_1 = require('../schemas/account.schema');
 var userRouter = express.Router();
 exports.userRouter = userRouter;
-var userCollection = database_1.database.get('users');
+var userDatabase = new database_service_1.DatabaseService(database_1.database.get('users'), user_schema_1.UserSchema);
+var accountDatabase = new database_service_1.DatabaseService(database_1.database.get('accounts'), account_schema_1.AccountSchema);
 /*
  * GET users.
  */
 userRouter.get('/', function (request, response) {
-    userCollection.find({}, {}, function (error, users) {
+    userDatabase.getList().then(function (users) {
         response.json(users);
     });
 });
 userRouter.post('/login', function (request, response) {
-    userCollection.findOne({ 'username': request.body.username }, {}, function (error, user) {
+    userDatabase.getDetail(request.body.username).then(function (user) {
         if (user) {
             if (user.password === request.body.password) {
                 response.json(user);
@@ -27,13 +31,17 @@ userRouter.post('/login', function (request, response) {
     });
 });
 userRouter.post('/register', function (request, response) {
-    userCollection.find({ 'username': request.body.username }, {}, function (error, results) {
+    userDatabase.getList({ username: request.body.username }).then(function (results) {
         if (_.some(results)) {
             response.status(400).send('A user with that username already exists');
             return;
         }
-        userCollection.insert(request.body, function (error, user) {
-            response.json(user);
+        accountDatabase.create({ balance: 0 }).then(function (account) {
+            var newUser = request.body;
+            newUser.accountId = account._id;
+            userDatabase.create(request.body).then(function (user) {
+                response.json(user);
+            });
         });
     });
 });

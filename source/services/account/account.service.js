@@ -33,9 +33,6 @@ System.register(['angular2/core', 'rxjs/Subject', '../request/request.service'],
                     return this.http.get('/api/account/' + accountId);
                 };
                 AccountService.prototype.getAccountForUser = function (user) {
-                    if (user.accountId == null) {
-                        return this.http.post('/api/account/new', user);
-                    }
                     return this.getAccount(user.accountId);
                 };
                 AccountService.prototype.updateAccount = function (account) {

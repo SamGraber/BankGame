@@ -26,13 +26,13 @@ describe('database service', function () {
         sinon.assert.calledOnce(database.findOne);
         sinon.assert.calledWith(database.findOne, { prop2: 2 });
     });
-    it('should get a list of items', function (done) {
+    it('should get a list of items with a search param', function (done) {
         var modelList = [
             { prop1: 'value 1' },
             { prop1: 'value 2' },
         ];
         database.list = modelList;
-        databaseService.getList().then(function (results) {
+        databaseService.getList({ prop1: 'value 1' }).then(function (results) {
             expect(results).to.have.length(2);
             expect(results[0]).to.deep.equal(modelList[0]);
             expect(results[1]).to.deep.equal(modelList[1]);
@@ -40,6 +40,7 @@ describe('database service', function () {
         });
         database.flush();
         sinon.assert.calledOnce(database.find);
+        sinon.assert.calledWith(database.find, { prop1: 'value 1' });
     });
     it('should update all properties of the model', function (done) {
         var model = {
@@ -57,6 +58,19 @@ describe('database service', function () {
         var arg = database.update.firstCall.args[1];
         expect(arg.$set.prop1).to.equal('something');
         expect(arg.$set.prop2).to.equal(4);
+    });
+    it('should create a new model', function (done) {
+        var model = {
+            prop1: 'something new',
+            prop2: 5,
+        };
+        databaseService.create(model).then(function (result) {
+            expect(result).to.deep.equal(model);
+            done();
+        });
+        database.flush();
+        sinon.assert.calledOnce(database.insert);
+        sinon.assert.calledWith(database.insert, model);
     });
 });
 //# sourceMappingURL=database.service.tests.js.map

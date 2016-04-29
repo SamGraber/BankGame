@@ -6,10 +6,10 @@ var DatabaseService = (function () {
         this.database = database;
         this.schema = schema;
     }
-    DatabaseService.prototype.getList = function () {
+    DatabaseService.prototype.getList = function (searchModel) {
         var _this = this;
         return new es6_shim_1.Promise(function (resolve, reject) {
-            _this.database.find({}, {}, function (error, data) {
+            _this.database.find(searchModel || {}, {}, function (error, data) {
                 resolve(data);
             });
         });
@@ -32,6 +32,14 @@ var DatabaseService = (function () {
                 _this.database.findOne(query, {}, function (findError, updatedModel) {
                     resolve(updatedModel);
                 });
+            });
+        });
+    };
+    DatabaseService.prototype.create = function (model) {
+        var _this = this;
+        return new es6_shim_1.Promise(function (resolve, reject) {
+            _this.database.insert(model, function (error, newModel) {
+                resolve(newModel);
             });
         });
     };

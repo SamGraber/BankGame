@@ -1,20 +1,23 @@
 "use strict";
 var express = require('express');
 var database_1 = require('../database');
+var database_service_1 = require('../services/database/database.service');
+var user_schema_1 = require('../schemas/user.schema');
+var account_schema_1 = require('../schemas/account.schema');
 var accountRouter = express.Router();
 exports.accountRouter = accountRouter;
-var accountCollection = database_1.database.get('accounts');
-var usersCollection = database_1.database.get('users');
+var accountDatabase = new database_service_1.DatabaseService(database_1.database.get('accounts'), account_schema_1.AccountSchema);
+var userDatabase = new database_service_1.DatabaseService(database_1.database.get('users'), user_schema_1.UserSchema);
 /*
  * GET accounts.
  */
 accountRouter.get('/', function (request, response) {
-    accountCollection.find({}, {}, function (error, accounts) {
+    accountDatabase.getList().then(function (accounts) {
         response.json(accounts);
     });
 });
 accountRouter.get('/:id', function (request, response) {
-    accountCollection.findOne({ '_id': request.params.id }, {}, function (error, account) {
+    accountDatabase.getDetail(request.params.id).then(function (account) {
         if (account) {
             response.json(account);
             return;
@@ -23,21 +26,8 @@ accountRouter.get('/:id', function (request, response) {
     });
 });
 accountRouter.put('/:id', function (request, response) {
-    accountCollection.update({ '_id': request.params.id }, { '$set': { 'balance': request.body.balance } }, function (error, account) {
-        accountCollection.findOne({ '_id': request.params.id }, {}, function (error, updatedAccount) {
-            response.json(updatedAccount);
-        });
-    });
-});
-accountRouter.post('/new', function (request, response) {
-    usersCollection.findOne({ 'username': request.body.username }, {}, function (error, user) {
-        if (user) {
-            accountCollection.insert({ 'balance': 0 }, function (error, account) {
-                usersCollection.update({ 'username': request.body.username }, { '$set': { 'accountId': account._id } }, function (error) {
-                    response.json(account);
-                });
-            });
-        }
+    accountDatabase.update(request.body).then(function (updatedAccount) {
+        response.json(updatedAccount);
     });
 });
 //# sourceMappingURL=accountApi.js.map
