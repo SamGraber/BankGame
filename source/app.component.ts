@@ -1,5 +1,6 @@
 import { Component } from 'angular2/core';
-import { RouteConfig , Router, ROUTER_DIRECTIVES} from 'angular2/router';
+import { RouteConfig, Router, ROUTER_DIRECTIVES} from 'angular2/router';
+import { ARRAY_PROVIDER } from 'typescript-angular-utilities/source/services/array/array.service';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { AccountComponent } from './components/account/account.component';
@@ -11,7 +12,7 @@ import { AccountService } from './services/account/account.service';
     selector: 'my-app',
     templateUrl: 'source/app.component.html',
 	directives: [ROUTER_DIRECTIVES],
-	providers: [AuthenticationService, RequestService, AccountService],
+	providers: [AuthenticationService, RequestService, AccountService, ARRAY_PROVIDER],
 })
 @RouteConfig([
   { path:'/login',       name: 'Login',      component: LoginComponent },
@@ -32,6 +33,8 @@ export class AppComponent {
 
 	logout(): void {
 		this.authentication.logout();
-		this.router.navigate(['Login']);
+		if (!this.authentication.isAuthenticated) {
+			this.router.navigate(['Login']);
+		}
 	}
 }

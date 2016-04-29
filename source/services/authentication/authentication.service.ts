@@ -1,11 +1,15 @@
-import { Injectable } from 'angular2/core';
+import * as _ from 'lodash';
+import { Injectable, Inject } from 'angular2/core';
 import { Observable } from 'rxjs/Observable';
+
+import { arrayToken, IArrayUtility } from 'typescript-angular-utilities/source/services/array/array.service';
+
 import { RequestService } from '../request/request.service';
 
 declare var localStorage: ISessionStorage;
 
 interface ISessionStorage {
-	loggedInUser: string;
+	loggedInUsers: string;
 	removeItem(item: string): void;
 }
 
@@ -23,12 +27,18 @@ export interface ICredentials {
 export class AuthenticationService {
 	isAuthenticated: boolean = false;
 	activeUser: IUser;
+	loggedInUsers: IUser[] = [];
 
-	constructor(private http: RequestService) {}
+	constructor(private http: RequestService
+			, @Inject(arrayToken) private array: IArrayUtility) { }
 
 	restoreSession(): boolean {
-		if (localStorage.loggedInUser) {
-			this.activeUser = JSON.parse(localStorage.loggedInUser);
+		if (localStorage.loggedInUsers) {
+			this.loggedInUsers = JSON.parse(localStorage.loggedInUsers);
+			if (this.loggedInUsers.length === 1) {
+				this.activeUser = this.loggedInUsers[0];
+			}
+
 			this.isAuthenticated = true;
 			return true;
 		}
@@ -41,9 +51,15 @@ export class AuthenticationService {
 	}
 
 	logout(): void {
-		localStorage.removeItem('loggedInUser');
+		this.array.remove(this.loggedInUsers, this.activeUser);
 		this.activeUser = null;
-		this.isAuthenticated = false;
+
+		if (_.some(this.loggedInUsers)) {
+			localStorage.loggedInUsers = JSON.stringify(this.loggedInUsers);
+		} else {
+			localStorage.removeItem('loggedInUser');
+			this.isAuthenticated = false;
+		}
 	}
 
 	register(credentials: ICredentials): Observable<IUser> {
@@ -53,8 +69,9 @@ export class AuthenticationService {
 
 	private authenticate: { (user: IUser): IUser } = (user: IUser): IUser => {
 		this.activeUser = user;
+		this.loggedInUsers.push(user);
 		this.isAuthenticated = true;
-		localStorage.loggedInUser = JSON.stringify(user);
+		localStorage.loggedInUsers = JSON.stringify(this.loggedInUsers);
 		return this.activeUser;
 	}
 }
