@@ -3,9 +3,11 @@ import * as express from 'express';
 import { database } from '../database';
 import { DatabaseService } from '../services/database/database.service';
 import { UserSchema, IUser } from '../schemas/user.schema';
+import { AccountSchema, IAccount } from '../schemas/account.schema';
 
 const userRouter = express.Router();
 const userDatabase = new DatabaseService(database.get('users'), UserSchema);
+const accountDatabase = new DatabaseService(database.get('accounts'), AccountSchema);
 
 export interface IUserSearch {
 	username?: string;
@@ -40,8 +42,13 @@ userRouter.post('/register', (request: express.Request, response: express.Respon
 			response.status(400).send('A user with that username already exists');
 			return;
 		}
-		userDatabase.create(request.body).then((user: IUser): void => {
-			response.json(user);
+
+		accountDatabase.create({ balance: 0 }).then((account: IAccount): void => {
+			const newUser: IUser = request.body;
+			newUser.accountId = account._id;
+			userDatabase.create(request.body).then((user: IUser): void => {
+				response.json(user);
+			});
 		});
 	});
 });

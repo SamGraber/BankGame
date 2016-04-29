@@ -23,9 +23,6 @@ export class AccountService {
 	}
 
 	getAccountForUser(user: IUser): Observable<IAccount> {
-		if (user.accountId == null) {
-			return this.http.post('/api/account/new', user);
-		}
 		return this.getAccount(user.accountId);
 	}
 

@@ -33,17 +33,4 @@ accountRouter.put('/:id', (request: express.Request, response: express.Response)
 	});
 })
 
-accountRouter.post('/new', (request: express.Request, response: express.Response): void => {
-	userDatabase.getDetail(request.body.username).then((user: IUser): void => {
-		if (user) {
-			accountDatabase.create({ 'balance': 0 }).then((account: IAccount): void => {
-				user.accountId = account._id;
-				userDatabase.update(user).then((): void => {
-					response.json(account);
-				});
-			});
-		}
-	});
-});
-
 export { accountRouter };
