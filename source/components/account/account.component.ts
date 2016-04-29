@@ -23,7 +23,7 @@ export class AccountComponent {
 			, public authentication: AuthenticationService) {}
 
 	ngOnInit(): void {
-		this.accountService.getAccountForUser(this.authentication.loggedInUser)
+		this.accountService.getAccountForUser(this.authentication.activeUser)
 			.subscribe((account: IAccount): IAccount => this.account = account);
 
 		this.accountService.accountChanges

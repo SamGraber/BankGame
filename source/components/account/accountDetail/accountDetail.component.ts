@@ -17,7 +17,7 @@ export class AccountDetailComponent {
 			, private router: Router) {}
 
 	ngOnInit(): void {
-		this.accountService.getAccountForUser(this.authentication.loggedInUser)
+		this.accountService.getAccountForUser(this.authentication.activeUser)
 			.subscribe((account: IAccount): IAccount => this.account = account);
 	}
 

@@ -22,19 +22,19 @@ export interface ICredentials {
 @Injectable()
 export class AuthenticationService {
 	isAuthenticated: boolean = false;
-	loggedInUser: IUser;
-	
+	activeUser: IUser;
+
 	constructor(private http: RequestService) {}
-	
+
 	restoreSession(): boolean {
 		if (localStorage.loggedInUser) {
-			this.loggedInUser = JSON.parse(localStorage.loggedInUser);
+			this.activeUser = JSON.parse(localStorage.loggedInUser);
 			this.isAuthenticated = true;
 			return true;
 		}
 		return false;
 	}
-	
+
 	login(credentials: ICredentials): Observable<IUser> {
 		return this.http.post('/api/users/login', credentials)
 					.map(this.authenticate);
@@ -42,7 +42,7 @@ export class AuthenticationService {
 
 	logout(): void {
 		localStorage.removeItem('loggedInUser');
-		this.loggedInUser = null;
+		this.activeUser = null;
 		this.isAuthenticated = false;
 	}
 
@@ -52,9 +52,9 @@ export class AuthenticationService {
 	}
 
 	private authenticate: { (user: IUser): IUser } = (user: IUser): IUser => {
-		this.loggedInUser = user;
+		this.activeUser = user;
 		this.isAuthenticated = true;
 		localStorage.loggedInUser = JSON.stringify(user);
-		return this.loggedInUser;
+		return this.activeUser;
 	}
 }
