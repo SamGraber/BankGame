@@ -1,4 +1,4 @@
-System.register(['lodash', 'angular2/core', 'typescript-angular-utilities/source/services/array/array.service', '../request/request.service'], function(exports_1, context_1) {
+System.register(['lodash', 'angular2/core', 'typescript-angular-utilities/source/services/array/array.service', '../request/request.service', '../store/store.service'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -13,7 +13,7 @@ System.register(['lodash', 'angular2/core', 'typescript-angular-utilities/source
     var __param = (this && this.__param) || function (paramIndex, decorator) {
         return function (target, key) { decorator(target, key, paramIndex); }
     };
-    var _, core_1, array_service_1, request_service_1;
+    var _, core_1, array_service_1, request_service_1, store_service_1;
     var AuthenticationService;
     return {
         setters:[
@@ -28,26 +28,30 @@ System.register(['lodash', 'angular2/core', 'typescript-angular-utilities/source
             },
             function (request_service_1_1) {
                 request_service_1 = request_service_1_1;
+            },
+            function (store_service_1_1) {
+                store_service_1 = store_service_1_1;
             }],
         execute: function() {
             AuthenticationService = (function () {
-                function AuthenticationService(http, array) {
+                function AuthenticationService(http, array, store) {
                     var _this = this;
                     this.http = http;
                     this.array = array;
+                    this.store = store;
                     this.isAuthenticated = false;
                     this.loggedInUsers = [];
                     this.authenticate = function (user) {
                         _this.activeUser = user;
                         _this.loggedInUsers.push(user);
                         _this.isAuthenticated = true;
-                        localStorage.loggedInUsers = JSON.stringify(_this.loggedInUsers);
+                        _this.store.set(_this.loggedInUsers, 'loggedInUsers');
                         return _this.activeUser;
                     };
                 }
                 AuthenticationService.prototype.restoreSession = function () {
-                    if (localStorage.loggedInUsers) {
-                        this.loggedInUsers = JSON.parse(localStorage.loggedInUsers);
+                    if (this.store.get('loggedInUsers')) {
+                        this.loggedInUsers = this.store.get('loggedInUsers');
                         if (this.loggedInUsers.length === 1) {
                             this.activeUser = this.loggedInUsers[0];
                         }
@@ -63,11 +67,8 @@ System.register(['lodash', 'angular2/core', 'typescript-angular-utilities/source
                 AuthenticationService.prototype.logout = function () {
                     this.array.remove(this.loggedInUsers, this.activeUser);
                     this.activeUser = null;
-                    if (_.some(this.loggedInUsers)) {
-                        localStorage.loggedInUsers = JSON.stringify(this.loggedInUsers);
-                    }
-                    else {
-                        localStorage.removeItem('loggedInUser');
+                    this.store.set(this.loggedInUsers, 'loggedInUsers');
+                    if (!_.some(this.loggedInUsers)) {
                         this.isAuthenticated = false;
                     }
                 };
@@ -78,7 +79,7 @@ System.register(['lodash', 'angular2/core', 'typescript-angular-utilities/source
                 AuthenticationService = __decorate([
                     core_1.Injectable(),
                     __param(1, core_1.Inject(array_service_1.arrayToken)), 
-                    __metadata('design:paramtypes', [request_service_1.RequestService, Object])
+                    __metadata('design:paramtypes', [request_service_1.RequestService, Object, store_service_1.Store])
                 ], AuthenticationService);
                 return AuthenticationService;
             }());
