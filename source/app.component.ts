@@ -16,10 +16,10 @@ import { AccountService } from './services/account/account.service';
 	providers: [AuthenticationService, RequestService, AccountService, ARRAY_PROVIDER],
 })
 @Routes([
-  { path:'/login',       component: LoginComponent },
-  { path:'/register',    component: RegisterComponent },
-  { path:'/account/...', component: AccountComponent },
-  { path:'/switchUser',  component: SwitchUserComponent },
+  { path:'./login',       component: LoginComponent },
+  { path:'./register',    component: RegisterComponent },
+  { path:'./account/...', component: AccountComponent },
+  { path:'./switchUser',  component: SwitchUserComponent },
 ])
 export class AppComponent implements OnInit {
 	constructor(public authentication: AuthenticationService
