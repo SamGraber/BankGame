@@ -16,9 +16,33 @@ System.config({
     "jquery": {
       "main": "dist/jquery.js",
     },
+    "rxjs": {
+      "main": "rx.js",
+    },
+    "@angular/platform-browser-dynamic": {
+      "main": "platform_browser_dynamic.js",
+    },
+    "@angular/platform-browser": {
+      "main": "index.js",
+    },
+    "@angular/core": {
+      "main": "index.js",
+    },
+    "@angular/common": {
+      "main": "index.js",
+    },
+    "@angular/compiler": {
+      "main": "index.js",
+    },
+    "@angular/http": {
+      "main": "index.js",
+    },
+    "@angular/router": {
+      "main": "index.js",
+    },
   },
   map: {
-    "angular2": "node_modules/angular2",
+    "@angular": "node_modules/@angular",
     "es6-shim": "node_modules/es6-shim/es6-shim.js",
     "jquery": "node_modules/jquery",
     "lodash": "node_modules/lodash",

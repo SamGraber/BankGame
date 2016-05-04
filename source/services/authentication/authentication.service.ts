@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import { Injectable, Inject } from 'angular2/core';
+import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { arrayToken, IArrayUtility } from 'typescript-angular-utilities/source/services/array/array.service';

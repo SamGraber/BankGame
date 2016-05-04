@@ -1,5 +1,5 @@
-import { Component } from 'angular2/core';
-import { RouteConfig, Router, ROUTER_DIRECTIVES} from 'angular2/router';
+import { Component } from '@angular/core';
+import { Routes, Router, ROUTER_DIRECTIVES} from '@angular/router';
 import { ARRAY_PROVIDER } from 'typescript-angular-utilities/source/services/array/array.service';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
@@ -15,11 +15,11 @@ import { AccountService } from './services/account/account.service';
 	directives: [ROUTER_DIRECTIVES],
 	providers: [AuthenticationService, RequestService, AccountService, ARRAY_PROVIDER],
 })
-@RouteConfig([
-  { path:'/login',       name: 'Login',      component: LoginComponent },
-  { path:'/register',    name: 'Register',   component: RegisterComponent },
-  { path:'/account/...', name: 'Account',    component: AccountComponent },
-  { path:'/switchUser',  name: 'SwitchUser', component: SwitchUserComponent },
+@Routes([
+  { path:'/login',       component: LoginComponent },
+  { path:'/register',    component: RegisterComponent },
+  { path:'/account/...', component: AccountComponent },
+  { path:'/switchUser',  component: SwitchUserComponent },
 ])
 export class AppComponent {
 	constructor(public authentication: AuthenticationService

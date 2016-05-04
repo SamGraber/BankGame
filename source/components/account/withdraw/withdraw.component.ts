@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
-import { Component } from 'angular2/core';
-import { RouteParams, Router } from 'angular2/router';
+import { Component } from '@angular/core';
+import { RouteParams, Router } from '@angular/router';
 import { AccountService, IAccount } from '../../../services/account/account.service';
 
 @Component({
