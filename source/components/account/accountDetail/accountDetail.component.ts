@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component OnInit } from '@angular/core';
 import { COMMON_DIRECTIVES } from '@angular/common';
 import { Router } from '@angular/router';
 
@@ -9,7 +9,7 @@ import { AuthenticationService } from '../../../services/authentication/authenti
     templateUrl: 'source/components/account/accountDetail/accountDetail.component.html',
 	directives: [COMMON_DIRECTIVES],
 })
-export class AccountDetailComponent {
+export class AccountDetailComponent implements OnInit {
 	account: IAccount;
 
 	constructor(private accountService: AccountService

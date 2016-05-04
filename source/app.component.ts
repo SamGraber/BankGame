@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component OnInit } from '@angular/core';
 import { Routes, Router, ROUTER_DIRECTIVES} from '@angular/router';
 import { ARRAY_PROVIDER } from 'typescript-angular-utilities/source/services/array/array.service';
 import { LoginComponent } from './components/login/login.component';
@@ -21,7 +21,7 @@ import { AccountService } from './services/account/account.service';
   { path:'/account/...', component: AccountComponent },
   { path:'/switchUser',  component: SwitchUserComponent },
 ])
-export class AppComponent {
+export class AppComponent implements OnInit {
 	constructor(public authentication: AuthenticationService
 						, private router: Router) {}
 

@@ -1,12 +1,12 @@
 import * as _ from 'lodash';
-import { Component } from '@angular/core';
+import { Component OnInit } from '@angular/core';
 import { RouteParams, Router } from '@angular/router';
 import { AccountService, IAccount } from '../../../services/account/account.service';
 
 @Component({
 	templateUrl: 'source/components/account/deposit/deposit.component.html',
 })
-export class DepositComponent {
+export class DepositComponent implements OnInit {
 	account: IAccount;
 	amount: number;
 
