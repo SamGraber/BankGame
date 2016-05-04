@@ -1,4 +1,4 @@
-import { Component OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { COMMON_DIRECTIVES } from '@angular/common';
 import { Router } from '@angular/router';
 

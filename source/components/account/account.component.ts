@@ -1,5 +1,5 @@
-import { Component OnInit } from '@angular/core';
-import { RouteConfig, ROUTER_DIRECTIVES } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Routes, ROUTER_DIRECTIVES } from '@angular/router';
 
 import { AccountService, IAccount } from '../../services/account/account.service';
 import { AuthenticationService } from '../../services/authentication/authentication.service';
@@ -11,7 +11,7 @@ import { DepositComponent } from './deposit/deposit.component';
     templateUrl: 'source/components/account/account.component.html',
 	directives: [ROUTER_DIRECTIVES],
 })
-@RouteConfig([
+@Routes([
 	{ path: '/', 				    name: 'Detail', component: AccountDetailComponent, useAsDefault: true },
 	{ path: '/withdraw/:accountId', name: 'Withdraw', component: WithdrawComponent },
 	{ path: '/deposit/:accountId',  name: 'Deposit',  component: DepositComponent },
