@@ -1,4 +1,4 @@
-import { Component } from 'angular2/core';
+import { Component, OnInit } from 'angular2/core';
 import { RouteConfig, ROUTER_DIRECTIVES } from 'angular2/router';
 
 import { AccountService, IAccount } from '../../services/account/account.service';
@@ -16,7 +16,7 @@ import { DepositComponent } from './deposit/deposit.component';
 	{ path: '/withdraw/:accountId', name: 'Withdraw', component: WithdrawComponent },
 	{ path: '/deposit/:accountId',  name: 'Deposit',  component: DepositComponent },
 ])
-export class AccountComponent {
+export class AccountComponent implements OnInit {
 	account: IAccount;
 
 	constructor(private accountService: AccountService
