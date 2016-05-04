@@ -5,13 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { arrayToken, IArrayUtility } from 'typescript-angular-utilities/source/services/array/array.service';
 
 import { RequestService } from '../request/request.service';
-
-declare var localStorage: ISessionStorage;
-
-interface ISessionStorage {
-	loggedInUsers: string;
-	removeItem(item: string): void;
-}
+import { Store } from '../store/store.service';
 
 export interface IUser {
 	username: string;
@@ -30,11 +24,12 @@ export class AuthenticationService {
 	loggedInUsers: IUser[] = [];
 
 	constructor(private http: RequestService
-			, @Inject(arrayToken) private array: IArrayUtility) { }
+			, @Inject(arrayToken) private array: IArrayUtility
+			, private store: Store) { }
 
 	restoreSession(): boolean {
-		if (localStorage.loggedInUsers) {
-			this.loggedInUsers = JSON.parse(localStorage.loggedInUsers);
+		if (this.store.get('loggedInUsers')) {
+			this.loggedInUsers = this.store.get<IUser[]>('loggedInUsers');
 			if (this.loggedInUsers.length === 1) {
 				this.activeUser = this.loggedInUsers[0];
 			}
@@ -53,11 +48,9 @@ export class AuthenticationService {
 	logout(): void {
 		this.array.remove(this.loggedInUsers, this.activeUser);
 		this.activeUser = null;
+		this.store.set(this.loggedInUsers, 'loggedInUsers');
 
-		if (_.some(this.loggedInUsers)) {
-			localStorage.loggedInUsers = JSON.stringify(this.loggedInUsers);
-		} else {
-			localStorage.removeItem('loggedInUser');
+		if (!_.some(this.loggedInUsers)) {
 			this.isAuthenticated = false;
 		}
 	}
@@ -71,7 +64,7 @@ export class AuthenticationService {
 		this.activeUser = user;
 		this.loggedInUsers.push(user);
 		this.isAuthenticated = true;
-		localStorage.loggedInUsers = JSON.stringify(this.loggedInUsers);
+		this.store.set(this.loggedInUsers, 'loggedInUsers');
 		return this.activeUser;
 	}
 }
