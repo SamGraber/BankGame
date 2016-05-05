@@ -1,9 +1,9 @@
 <h1>Bank Game</h1>
 <ul class="nav nav-tabs">
-	<li role="presentation" *ngIf="authentication.activeUser != null"><a [routerLink]="['Account']">Account</a></li>
+	<li role="presentation" *ngIf="authentication.activeUser != null"><a [routerLink]="['account']">Account</a></li>
 	<li role="presentation" *ngIf="authentication.activeUser != null"><a role="button" (click)="logout()">Logout</a></li>
-	<li role="presentation"><a [routerLink]="['Login']">Login</a></li>
-	<li role="presentation"><a [routerLink]="['Register']">Register</a></li>
-	<li role="presentation"><a [routerLink]="['SwitchUser']">Switch User</a></li>
+	<li role="presentation"><a [routerLink]="['login']">Login</a></li>
+	<li role="presentation"><a [routerLink]="['register']">Register</a></li>
+	<li role="presentation"><a [routerLink]="['switchUser']">Switch User</a></li>
 </ul>
 <router-outlet></router-outlet>
