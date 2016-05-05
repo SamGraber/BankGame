@@ -12,9 +12,9 @@ import { DepositComponent } from './deposit/deposit.component';
 	directives: [ROUTER_DIRECTIVES],
 })
 @Routes([
-	{ path: '/', 				    name: 'Detail', component: AccountDetailComponent, useAsDefault: true },
-	{ path: '/withdraw/:accountId', name: 'Withdraw', component: WithdrawComponent },
-	{ path: '/deposit/:accountId',  name: 'Deposit',  component: DepositComponent },
+	{ path: 'detail',			    component: AccountDetailComponent, },
+	{ path: 'withdraw/:accountId', component: WithdrawComponent },
+	{ path: 'deposit/:accountId',  component: DepositComponent },
 ])
 export class AccountComponent implements OnInit {
 	account: IAccount;

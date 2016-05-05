@@ -13,6 +13,6 @@ export class SwitchUserComponent {
 
 	switch(user: IUser): void {
 		this.authentication.activeUser = user;
-		this.router.navigate(['Account']);
+		this.router.navigate(['account/detail']);
 	}
 }

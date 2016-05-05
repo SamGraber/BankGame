@@ -2,10 +2,9 @@ import * as _ from 'lodash';
 import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
-import { arrayToken, IArrayUtility } from 'typescript-angular-utilities/source/services/array/array.service';
-
 import { RequestService } from '../request/request.service';
 import { Store } from '../store/store.service';
+import { ArrayUtility } from '../array/array.service';
 
 export interface IUser {
 	username: string;
@@ -24,8 +23,8 @@ export class AuthenticationService {
 	loggedInUsers: IUser[] = [];
 
 	constructor(private http: RequestService
-			, @Inject(arrayToken) private array: IArrayUtility
-			, private store: Store) { }
+			, private store: Store
+			, private array: ArrayUtility) { }
 
 	restoreSession(): boolean {
 		if (this.store.get('loggedInUsers')) {
