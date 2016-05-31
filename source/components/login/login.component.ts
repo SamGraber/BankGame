@@ -15,7 +15,7 @@ export class LoginComponent {
 
 	onSubmit(): void {
 		this.authenticationService.login(this.model).subscribe(() => {
-			this.router.navigate(['Account']);
+			this.router.navigate(['account/' + this.authenticationService.activeUser.accountId]);
 		});
 	}
 }

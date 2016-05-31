@@ -28,7 +28,7 @@ export class AppComponent implements OnInit {
 	ngOnInit(): void {
 		if (this.authentication.restoreSession()) {
 			if (this.authentication.activeUser) {
-				this.router.navigate(['account/detail']);
+				this.router.navigate(['account/' + this.authentication.activeUser.accountId]);
 			} else {
 				this.router.navigate(['switchUser']);
 			}
