@@ -1,7 +1,7 @@
-System.register(['angular2/router', 'angular2/http', 'toastr', 'rxjs/Rx', 'angular2/platform/browser', './app.component', './services/store/store.browser'], function(exports_1, context_1) {
+System.register(['@angular/router', '@angular/http', 'toastr', 'rxjs/Rx', '@angular/platform-browser-dynamic', './app.component', './services/store/store.browser'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
-    var router_1, http_1, toastr, browser_1, app_component_1, store_browser_1;
+    var router_1, http_1, toastr, platform_browser_dynamic_1, app_component_1, store_browser_1;
     return {
         setters:[
             function (router_1_1) {
@@ -14,8 +14,8 @@ System.register(['angular2/router', 'angular2/http', 'toastr', 'rxjs/Rx', 'angul
                 toastr = toastr_1;
             },
             function (_1) {},
-            function (browser_1_1) {
-                browser_1 = browser_1_1;
+            function (platform_browser_dynamic_1_1) {
+                platform_browser_dynamic_1 = platform_browser_dynamic_1_1;
             },
             function (app_component_1_1) {
                 app_component_1 = app_component_1_1;
@@ -27,7 +27,7 @@ System.register(['angular2/router', 'angular2/http', 'toastr', 'rxjs/Rx', 'angul
             toastr.options = {
                 positionClass: 'toast-top-right',
             };
-            browser_1.bootstrap(app_component_1.AppComponent, [
+            platform_browser_dynamic_1.bootstrap(app_component_1.AppComponent, [
                 router_1.ROUTER_PROVIDERS,
                 http_1.HTTP_PROVIDERS,
                 store_browser_1.BROWSER_STORE_PROVIDERS,

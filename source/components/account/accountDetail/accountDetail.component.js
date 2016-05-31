@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/common', 'angular2/router', '../../../services/account/account.service', '../../../services/authentication/authentication.service'], function(exports_1, context_1) {
+System.register(['@angular/core', '@angular/common', '@angular/router', '../../../services/account/account.service', '../../../services/authentication/authentication.service'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -42,10 +42,10 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', '../../.
                         .subscribe(function (account) { return _this.account = account; });
                 };
                 AccountDetailComponent.prototype.startWithdrawal = function () {
-                    this.router.navigate(['Withdraw', { accountId: this.account._id }]);
+                    this.router.navigate(['/account/' + this.account._id + '/withdraw']);
                 };
                 AccountDetailComponent.prototype.startDeposit = function () {
-                    this.router.navigate(['Deposit', { accountId: this.account._id }]);
+                    this.router.navigate(['/account/' + this.account._id + '/deposit']);
                 };
                 AccountDetailComponent = __decorate([
                     core_1.Component({

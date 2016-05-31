@@ -1,6 +1,6 @@
-import { Component, OnInit } from 'angular2/core';
-import { COMMON_DIRECTIVES } from 'angular2/common';
-import { Router } from 'angular2/router';
+import { Component, OnInit } from '@angular/core';
+import { COMMON_DIRECTIVES } from '@angular/common';
+import { Router } from '@angular/router';
 
 import { AccountService, IAccount } from '../../../services/account/account.service';
 import { AuthenticationService } from '../../../services/authentication/authentication.service';
@@ -22,10 +22,10 @@ export class AccountDetailComponent implements OnInit {
 	}
 
 	startWithdrawal(): void {
-		this.router.navigate(['Withdraw', { accountId: this.account._id }]);
+		this.router.navigate(['/account/' + this.account._id + '/withdraw']);
 	}
 
 	startDeposit(): void {
-		this.router.navigate(['Deposit', { accountId: this.account._id }]);
+		this.router.navigate(['/account/' + this.account._id + '/deposit']);
 	}
 }

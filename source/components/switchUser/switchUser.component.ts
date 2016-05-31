@@ -1,6 +1,6 @@
-import { Component } from 'angular2/core';
-import { COMMON_DIRECTIVES } from 'angular2/common';
-import { Router } from 'angular2/router';
+import { Component } from '@angular/core';
+import { COMMON_DIRECTIVES } from '@angular/common';
+import { Router } from '@angular/router';
 import { AuthenticationService, IUser } from '../../services/authentication/authentication.service';
 
 @Component({
@@ -13,6 +13,6 @@ export class SwitchUserComponent {
 
 	switch(user: IUser): void {
 		this.authentication.activeUser = user;
-		this.router.navigate(['Account']);
+		this.router.navigate(['account', { accountId: user.accountId }, 'detail']);
 	}
 }

@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', '../../services/account/account.service', '../../services/authentication/authentication.service', './accountDetail/accountDetail.component', './withdraw/withdraw.component', './deposit/deposit.component'], function(exports_1, context_1) {
+System.register(['@angular/core', '@angular/router', '../../services/account/account.service', '../../services/authentication/authentication.service', './accountDetail/accountDetail.component', './withdraw/withdraw.component', './deposit/deposit.component'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -41,9 +41,9 @@ System.register(['angular2/core', 'angular2/router', '../../services/account/acc
                     this.accountService = accountService;
                     this.authentication = authentication;
                 }
-                AccountComponent.prototype.ngOnInit = function () {
+                AccountComponent.prototype.routerOnActivate = function (routeSegment) {
                     var _this = this;
-                    this.accountService.getAccountForUser(this.authentication.activeUser)
+                    this.accountService.getAccount(routeSegment.getParam('accountId'))
                         .subscribe(function (account) { return _this.account = account; });
                     this.accountService.accountChanges
                         .subscribe(function (updatedAccount) { return _this.account = updatedAccount; });
@@ -53,10 +53,11 @@ System.register(['angular2/core', 'angular2/router', '../../services/account/acc
                         templateUrl: 'source/components/account/account.component.html',
                         directives: [router_1.ROUTER_DIRECTIVES],
                     }),
-                    router_1.RouteConfig([
-                        { path: '/', name: 'Detail', component: accountDetail_component_1.AccountDetailComponent, useAsDefault: true },
-                        { path: '/withdraw/:accountId', name: 'Withdraw', component: withdraw_component_1.WithdrawComponent },
-                        { path: '/deposit/:accountId', name: 'Deposit', component: deposit_component_1.DepositComponent },
+                    router_1.Routes([
+                        { path: '', component: accountDetail_component_1.AccountDetailComponent, },
+                        { path: 'detail', component: accountDetail_component_1.AccountDetailComponent, },
+                        { path: 'withdraw', component: withdraw_component_1.WithdrawComponent },
+                        { path: 'deposit', component: deposit_component_1.DepositComponent },
                     ]), 
                     __metadata('design:paramtypes', [account_service_1.AccountService, authentication_service_1.AuthenticationService])
                 ], AccountComponent);

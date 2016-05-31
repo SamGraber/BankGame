@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/common', 'angular2/router', '../../services/authentication/authentication.service'], function(exports_1, context_1) {
+System.register(['@angular/core', '@angular/common', '@angular/router', '../../services/authentication/authentication.service'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -36,7 +36,7 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', '../../s
                 LoginComponent.prototype.onSubmit = function () {
                     var _this = this;
                     this.authenticationService.login(this.model).subscribe(function () {
-                        _this.router.navigate(['Account']);
+                        _this.router.navigate(['account/' + _this.authenticationService.activeUser.accountId]);
                     });
                 };
                 LoginComponent = __decorate([
