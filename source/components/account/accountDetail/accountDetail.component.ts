@@ -22,10 +22,10 @@ export class AccountDetailComponent implements OnInit {
 	}
 
 	startWithdrawal(): void {
-		this.router.navigate(['withdraw', { accountId: this.account._id }]);
+		this.router.navigate(['/account/' + this.account._id + '/withdraw']);
 	}
 
 	startDeposit(): void {
-		this.router.navigate(['deposit', { accountId: this.account._id }]);
+		this.router.navigate(['/account/' + this.account._id + '/deposit']);
 	}
 }

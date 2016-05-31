@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Routes, ROUTER_DIRECTIVES } from '@angular/router';
+import { Component } from '@angular/core';
+import { Routes, ROUTER_DIRECTIVES, OnActivate, RouteSegment } from '@angular/router';
 
 import { AccountService, IAccount } from '../../services/account/account.service';
 import { AuthenticationService } from '../../services/authentication/authentication.service';
@@ -12,18 +12,19 @@ import { DepositComponent } from './deposit/deposit.component';
 	directives: [ROUTER_DIRECTIVES],
 })
 @Routes([
-	{ path: 'detail',			    component: AccountDetailComponent, },
-	{ path: 'withdraw/:accountId', component: WithdrawComponent },
-	{ path: 'deposit/:accountId',  component: DepositComponent },
+	{ path: '',	    	 component: AccountDetailComponent, },
+	{ path: 'detail',   component: AccountDetailComponent, },
+	{ path: 'withdraw', component: WithdrawComponent },
+	{ path: 'deposit',  component: DepositComponent },
 ])
-export class AccountComponent implements OnInit {
+export class AccountComponent implements OnActivate {
 	account: IAccount;
 
 	constructor(private accountService: AccountService
 			, public authentication: AuthenticationService) {}
 
-	ngOnInit(): void {
-		this.accountService.getAccountForUser(this.authentication.activeUser)
+	routerOnActivate(routeSegment: RouteSegment): void {
+		this.accountService.getAccount(routeSegment.getParam('accountId'))
 			.subscribe((account: IAccount): IAccount => this.account = account);
 
 		this.accountService.accountChanges
