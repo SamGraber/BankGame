@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/common', 'angular2/router', '../../services/authentication/authentication.service'], function(exports_1, context_1) {
+System.register(['@angular/core', '@angular/common', '@angular/router', '../../services/authentication/authentication.service'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -34,7 +34,7 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', '../../s
                 }
                 SwitchUserComponent.prototype.switch = function (user) {
                     this.authentication.activeUser = user;
-                    this.router.navigate(['Account']);
+                    this.router.navigate(['account', { accountId: user.accountId }, 'detail']);
                 };
                 SwitchUserComponent = __decorate([
                     core_1.Component({
