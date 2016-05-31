@@ -1,4 +1,4 @@
-import { ISchema } from '../services/database/database.service';
+import { ISchema } from 'monk-database-helper';
 
 export interface IAccount {
 	_id: string;

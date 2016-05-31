@@ -1,6 +1,6 @@
 import * as express from 'express';
 import { database } from '../database';
-import { DatabaseService } from '../services/database/database.service';
+import { DatabaseService } from 'monk-database-helper';
 import { UserSchema, IUser } from '../schemas/user.schema';
 import { AccountSchema, IAccount } from '../schemas/account.schema';
 
